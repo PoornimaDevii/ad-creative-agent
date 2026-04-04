@@ -1,0 +1,3958 @@
+{
+  "formats": [
+    {
+      "format_id": {
+        "agent_url": "https://creative.adcontextprotocol.org",
+        "id": "adzymic-carousel-standard-001"
+      },
+      "name": "Carousel Standard",
+      "type": "display",
+      "is_responsive": false,
+      "dco_available": true,
+      "assets": [
+        {
+          "asset_id": "hero_image",
+          "asset_type": "image",
+          "asset_role": "hero_image",
+          "item_type": "group",
+          "required": true,
+          "requirements": {
+            "min": 3,
+            "aspect_ratio": "2:1",
+            "width": 1040,
+            "height": 520
+          }
+        },
+        {
+          "asset_id": "headline",
+          "asset_type": "text",
+          "asset_role": "headline",
+          "item_type": "individual",
+          "required": true,
+          "requirements": {
+            "max_length": 55
+          }
+        },
+        {
+          "asset_id": "body_text",
+          "asset_type": "text",
+          "asset_role": "body_text",
+          "item_type": "individual",
+          "required": false,
+          "requirements": {
+            "max_length": 90
+          }
+        },
+        {
+          "asset_id": "call_to_action",
+          "asset_type": "text",
+          "asset_role": "call_to_action",
+          "item_type": "individual",
+          "required": false,
+          "requirements": {
+            "max_length": 25
+          }
+        }
+      ],
+      "renders": [
+        {
+          "role": "primary",
+          "dimensions": {
+            "width": 1040,
+            "height": 520
+          }
+        }
+      ],
+      "preview_urls": [
+        "http://app.enzymic.co/previews/Kkd1Wn1MM5nlmJwZ",
+        "https://app.enzymic.co/previews/Bj0LRyboQYprKO2Z"
+      ],
+      "specs": {
+        "text_limit_variants": [
+          {
+            "label": "Ad with Title Only",
+            "title": 90
+          },
+          {
+            "label": "Ad with Title and Description",
+            "title": 55,
+            "description": 125
+          },
+          {
+            "label": "Ad with Title and Button",
+            "title": 55,
+            "button": 15
+          },
+          {
+            "label": "Ad with Title, Button and Description",
+            "title": 55,
+            "description": 90,
+            "button": 25
+          }
+        ],
+        "min_cards_by_size": {
+          "300x250": 3,
+          "300x600": 4,
+          "320x480": 4,
+          "970x250": 5
+        },
+        "image_dimensions": [
+          "Each Card: 1040 x 520 px or 2:1 Aspect Ratio Video : aspect ratio is horizontal 16:9 (should be less than 30 sec and less than 3mb file size)"
+        ],
+        "feature_image_dimensions": "300x250 or 1.2:1 Aspect Ratio (For Featured Image on 970x250, 300x600 and 300x250)",
+        "video_requirements": null,
+        "additional_requirements": [],
+        "optional_requirements": []
+      }
+    },
+    {
+      "format_id": {
+        "agent_url": "https://creative.adcontextprotocol.org",
+        "id": "adzymic-carousel-rotation-with-highlight-on-002"
+      },
+      "name": "Carousel Rotation with highlight on",
+      "type": "display",
+      "is_responsive": false,
+      "dco_available": true,
+      "assets": [
+        {
+          "asset_id": "hero_image",
+          "asset_type": "image",
+          "asset_role": "hero_image",
+          "item_type": "group",
+          "required": true,
+          "requirements": {
+            "min": 3,
+            "aspect_ratio": "1:1.52",
+            "width": 368,
+            "height": 560
+          }
+        },
+        {
+          "asset_id": "headline",
+          "asset_type": "text",
+          "asset_role": "headline",
+          "item_type": "individual",
+          "required": true,
+          "requirements": {
+            "max_length": 25
+          }
+        },
+        {
+          "asset_id": "body_text",
+          "asset_type": "text",
+          "asset_role": "body_text",
+          "item_type": "individual",
+          "required": false,
+          "requirements": {
+            "max_length": 40
+          }
+        },
+        {
+          "asset_id": "call_to_action",
+          "asset_type": "text",
+          "asset_role": "call_to_action",
+          "item_type": "individual",
+          "required": false,
+          "requirements": {
+            "max_length": 13
+          }
+        }
+      ],
+      "renders": [
+        {
+          "role": "primary",
+          "dimensions": {
+            "width": 300,
+            "height": 250
+          }
+        },
+        {
+          "role": "companion",
+          "dimensions": {
+            "width": 300,
+            "height": 600
+          }
+        },
+        {
+          "role": "companion",
+          "dimensions": {
+            "width": 970,
+            "height": 250
+          }
+        },
+        {
+          "role": "companion",
+          "dimensions": {
+            "width": 320,
+            "height": 50
+          }
+        },
+        {
+          "role": "companion",
+          "dimensions": {
+            "width": 300,
+            "height": 50
+          }
+        },
+        {
+          "role": "companion",
+          "dimensions": {
+            "width": 320,
+            "height": 100
+          }
+        },
+        {
+          "role": "companion",
+          "dimensions": {
+            "width": 970,
+            "height": 90
+          }
+        },
+        {
+          "role": "companion",
+          "dimensions": {
+            "width": 728,
+            "height": 90
+          }
+        }
+      ],
+      "preview_urls": [
+        "http://app.enzymic.co/previews/RqYLJD9MdYpBb4w6"
+      ],
+      "specs": {
+        "text_limit_variants": [
+          {
+            "label": "Ad with Title Only",
+            "title": 40
+          },
+          {
+            "label": "Ad with Title and Description",
+            "title": 25,
+            "description": 40
+          },
+          {
+            "label": "Ad with Title and Button",
+            "title": 40,
+            "button": 13
+          },
+          {
+            "label": "Ad with Title, Button and Description",
+            "title": 25,
+            "description": 40,
+            "button": 13
+          }
+        ],
+        "min_cards_by_size": {
+          "300x250": 3,
+          "300x600": 6,
+          "970x250": 6
+        },
+        "image_dimensions": [
+          "Auto Rotate Highlight On : Each Card: 368x560 px or 1:1.52 Aspect Ratio Auto Rotation Highlight Off: Each Card: 400x400 px or 1:1 Aspect Ratio"
+        ],
+        "feature_image_dimensions": "300x250 or 1.2:1 Aspect Ratio (For Featured Image on 970x250, 300x600 and 300x250)",
+        "video_requirements": null,
+        "additional_requirements": [],
+        "optional_requirements": []
+      }
+    },
+    {
+      "format_id": {
+        "agent_url": "https://creative.adcontextprotocol.org",
+        "id": "adzymic-carousel-rotation-with-highlight-off-003"
+      },
+      "name": "Carousel Rotation with highlight off",
+      "type": "display",
+      "is_responsive": false,
+      "dco_available": true,
+      "assets": [
+        {
+          "asset_id": "hero_image",
+          "asset_type": "image",
+          "asset_role": "hero_image",
+          "item_type": "group",
+          "required": true,
+          "requirements": {
+            "min": 3,
+            "aspect_ratio": "1:1.52",
+            "width": 368,
+            "height": 560
+          }
+        },
+        {
+          "asset_id": "headline",
+          "asset_type": "text",
+          "asset_role": "headline",
+          "item_type": "individual",
+          "required": true,
+          "requirements": {
+            "max_length": 25
+          }
+        },
+        {
+          "asset_id": "body_text",
+          "asset_type": "text",
+          "asset_role": "body_text",
+          "item_type": "individual",
+          "required": false,
+          "requirements": {
+            "max_length": 40
+          }
+        },
+        {
+          "asset_id": "call_to_action",
+          "asset_type": "text",
+          "asset_role": "call_to_action",
+          "item_type": "individual",
+          "required": false,
+          "requirements": {
+            "max_length": 13
+          }
+        }
+      ],
+      "renders": [
+        {
+          "role": "primary",
+          "dimensions": {
+            "width": 300,
+            "height": 250
+          }
+        },
+        {
+          "role": "companion",
+          "dimensions": {
+            "width": 300,
+            "height": 600
+          }
+        },
+        {
+          "role": "companion",
+          "dimensions": {
+            "width": 970,
+            "height": 250
+          }
+        },
+        {
+          "role": "companion",
+          "dimensions": {
+            "width": 320,
+            "height": 50
+          }
+        },
+        {
+          "role": "companion",
+          "dimensions": {
+            "width": 300,
+            "height": 50
+          }
+        },
+        {
+          "role": "companion",
+          "dimensions": {
+            "width": 320,
+            "height": 100
+          }
+        },
+        {
+          "role": "companion",
+          "dimensions": {
+            "width": 970,
+            "height": 90
+          }
+        },
+        {
+          "role": "companion",
+          "dimensions": {
+            "width": 728,
+            "height": 90
+          }
+        }
+      ],
+      "preview_urls": [
+        "http://app.enzymic.co/previews/3YX5PdpBGj98bJDQ"
+      ],
+      "specs": {
+        "text_limit_variants": [
+          {
+            "label": "Ad with Title Only",
+            "title": 40
+          },
+          {
+            "label": "Ad with Title and Description",
+            "title": 25,
+            "description": 40
+          },
+          {
+            "label": "Ad with Title and Button",
+            "title": 40,
+            "button": 13
+          },
+          {
+            "label": "Ad with Title, Button and Description",
+            "title": 25,
+            "description": 40,
+            "button": 13
+          }
+        ],
+        "min_cards_by_size": {
+          "300x250": 3,
+          "300x600": 6,
+          "970x250": 6
+        },
+        "image_dimensions": [
+          "Auto Rotate Highlight On : Each Card: 368x560 px or 1:1.52 Aspect Ratio Auto Rotation Highlight Off: Each Card: 400x400 px or 1:1 Aspect Ratio"
+        ],
+        "feature_image_dimensions": "300x250 or 1.2:1 Aspect Ratio (For Featured Image on 970x250, 300x600 and 300x250)",
+        "video_requirements": null,
+        "additional_requirements": [],
+        "optional_requirements": []
+      }
+    },
+    {
+      "format_id": {
+        "agent_url": "https://creative.adcontextprotocol.org",
+        "id": "adzymic-carousel-overlay-004"
+      },
+      "name": "Carousel Overlay",
+      "type": "display",
+      "is_responsive": false,
+      "dco_available": true,
+      "assets": [
+        {
+          "asset_id": "hero_image",
+          "asset_type": "image",
+          "asset_role": "hero_image",
+          "item_type": "group",
+          "required": true,
+          "requirements": {
+            "min": 3,
+            "aspect_ratio": "2:1"
+          }
+        },
+        {
+          "asset_id": "headline",
+          "asset_type": "text",
+          "asset_role": "headline",
+          "item_type": "individual",
+          "required": true,
+          "requirements": {
+            "max_length": 40
+          }
+        },
+        {
+          "asset_id": "body_text",
+          "asset_type": "text",
+          "asset_role": "body_text",
+          "item_type": "individual",
+          "required": false,
+          "requirements": {
+            "max_length": 90
+          }
+        },
+        {
+          "asset_id": "call_to_action",
+          "asset_type": "text",
+          "asset_role": "call_to_action",
+          "item_type": "individual",
+          "required": false,
+          "requirements": {
+            "max_length": 25
+          }
+        }
+      ],
+      "renders": [
+        {
+          "role": "primary",
+          "dimensions": {
+            "width": 300,
+            "height": 250
+          }
+        },
+        {
+          "role": "companion",
+          "dimensions": {
+            "width": 300,
+            "height": 600
+          }
+        },
+        {
+          "role": "companion",
+          "dimensions": {
+            "width": 320,
+            "height": 480
+          }
+        },
+        {
+          "role": "companion",
+          "dimensions": {
+            "width": 970,
+            "height": 250
+          }
+        }
+      ],
+      "preview_urls": [],
+      "specs": {
+        "text_limit_variants": [
+          {
+            "label": "Ad with Title Only",
+            "title": 55
+          },
+          {
+            "label": "Ad with Title and Description",
+            "title": 40,
+            "description": 90
+          },
+          {
+            "label": "Ad with Title and Button",
+            "title": 55,
+            "button": 25
+          },
+          {
+            "label": "Ad with Title, Button and Description",
+            "title": 40,
+            "description": 90,
+            "button": 25
+          }
+        ],
+        "min_cards_by_size": {
+          "300x250": 3,
+          "300x600": 4,
+          "320x480": 4,
+          "970x250": 5
+        },
+        "image_dimensions": [
+          "Each Card: 6 00 x 500 px or 1.2:1 Aspect Ratio Video : aspect ratio is horizontal 16:9 (should be less than 30 sec and less than 3mb file size)"
+        ],
+        "feature_image_dimensions": null,
+        "video_requirements": null,
+        "additional_requirements": [],
+        "optional_requirements": []
+      }
+    },
+    {
+      "format_id": {
+        "agent_url": "https://creative.adcontextprotocol.org",
+        "id": "adzymic-carousel-flip-005"
+      },
+      "name": "Carousel Flip",
+      "type": "display",
+      "is_responsive": false,
+      "dco_available": true,
+      "assets": [
+        {
+          "asset_id": "hero_image",
+          "asset_type": "image",
+          "asset_role": "hero_image",
+          "item_type": "group",
+          "required": true,
+          "requirements": {
+            "min": 3,
+            "aspect_ratio": "1:1",
+            "width": 400,
+            "height": 400
+          }
+        },
+        {
+          "asset_id": "headline",
+          "asset_type": "text",
+          "asset_role": "headline",
+          "item_type": "individual",
+          "required": true,
+          "requirements": {
+            "max_length": 30
+          }
+        },
+        {
+          "asset_id": "body_text",
+          "asset_type": "text",
+          "asset_role": "body_text",
+          "item_type": "individual",
+          "required": false,
+          "requirements": {
+            "max_length": 40
+          }
+        },
+        {
+          "asset_id": "call_to_action",
+          "asset_type": "text",
+          "asset_role": "call_to_action",
+          "item_type": "individual",
+          "required": false,
+          "requirements": {
+            "max_length": 10
+          }
+        }
+      ],
+      "renders": [
+        {
+          "role": "primary",
+          "dimensions": {
+            "width": 300,
+            "height": 250
+          }
+        },
+        {
+          "role": "companion",
+          "dimensions": {
+            "width": 300,
+            "height": 600
+          }
+        },
+        {
+          "role": "companion",
+          "dimensions": {
+            "width": 320,
+            "height": 480
+          }
+        },
+        {
+          "role": "companion",
+          "dimensions": {
+            "width": 970,
+            "height": 250
+          }
+        },
+        {
+          "role": "companion",
+          "dimensions": {
+            "width": 320,
+            "height": 50
+          }
+        },
+        {
+          "role": "companion",
+          "dimensions": {
+            "width": 300,
+            "height": 50
+          }
+        },
+        {
+          "role": "companion",
+          "dimensions": {
+            "width": 320,
+            "height": 100
+          }
+        },
+        {
+          "role": "companion",
+          "dimensions": {
+            "width": 970,
+            "height": 90
+          }
+        },
+        {
+          "role": "companion",
+          "dimensions": {
+            "width": 728,
+            "height": 90
+          }
+        }
+      ],
+      "preview_urls": [],
+      "specs": {
+        "text_limit_variants": [
+          {
+            "label": "Ad with Title Only",
+            "title": 30
+          },
+          {
+            "label": "Ad with Title and Description",
+            "title": 30,
+            "description": 40
+          },
+          {
+            "label": "Ad with Title and Button",
+            "title": 30,
+            "button": 10
+          },
+          {
+            "label": "Ad with Title, Button and Description",
+            "title": 30,
+            "description": 40,
+            "button": 10
+          }
+        ],
+        "min_cards_by_size": {
+          "300x250": 3,
+          "300x600": 6,
+          "970x250": 6
+        },
+        "image_dimensions": [
+          "Each Card: 400x400 px or 1:1 Aspect Ratio"
+        ],
+        "feature_image_dimensions": "300x250 (For Featured Image on 300x250) 56 0x180 (For Featured Image on 300x600) 380x460 (For Featured Image on 970x250)",
+        "video_requirements": null,
+        "additional_requirements": [],
+        "optional_requirements": []
+      }
+    },
+    {
+      "format_id": {
+        "agent_url": "https://creative.adcontextprotocol.org",
+        "id": "adzymic-carousel-skinny-006"
+      },
+      "name": "Carousel Skinny",
+      "type": "display",
+      "is_responsive": false,
+      "dco_available": true,
+      "assets": [
+        {
+          "asset_id": "hero_image",
+          "asset_type": "image",
+          "asset_role": "hero_image",
+          "item_type": "group",
+          "required": true,
+          "requirements": {
+            "min": 3,
+            "aspect_ratio": "1:1.52",
+            "width": 368,
+            "height": 560
+          }
+        },
+        {
+          "asset_id": "headline",
+          "asset_type": "text",
+          "asset_role": "headline",
+          "item_type": "individual",
+          "required": true,
+          "requirements": {
+            "max_length": 25
+          }
+        },
+        {
+          "asset_id": "body_text",
+          "asset_type": "text",
+          "asset_role": "body_text",
+          "item_type": "individual",
+          "required": false,
+          "requirements": {
+            "max_length": 40
+          }
+        },
+        {
+          "asset_id": "call_to_action",
+          "asset_type": "text",
+          "asset_role": "call_to_action",
+          "item_type": "individual",
+          "required": false,
+          "requirements": {
+            "max_length": 13
+          }
+        }
+      ],
+      "renders": [
+        {
+          "role": "primary",
+          "dimensions": {
+            "width": 368,
+            "height": 560
+          }
+        }
+      ],
+      "preview_urls": [],
+      "specs": {
+        "text_limit_variants": [
+          {
+            "label": "Ad with Title Only",
+            "title": 40
+          },
+          {
+            "label": "Ad with Title and Description",
+            "title": 25,
+            "description": 40
+          },
+          {
+            "label": "Ad with Title and Button",
+            "title": 40,
+            "button": 13
+          },
+          {
+            "label": "Ad with Title, Button and Description",
+            "title": 25,
+            "description": 40,
+            "button": 13
+          }
+        ],
+        "min_cards_by_size": {
+          "300x250": 3,
+          "300x600": 8,
+          "970x250": 10
+        },
+        "image_dimensions": [
+          "Each Card: 368 x 560 px or 1:1.52 Aspect Ratio"
+        ],
+        "feature_image_dimensions": null,
+        "video_requirements": null,
+        "additional_requirements": [],
+        "optional_requirements": []
+      }
+    },
+    {
+      "format_id": {
+        "agent_url": "https://creative.adcontextprotocol.org",
+        "id": "adzymic-vertical-video-007"
+      },
+      "name": "Vertical Video",
+      "type": "video",
+      "is_responsive": false,
+      "dco_available": false,
+      "assets": [
+        {
+          "asset_id": "hero_image",
+          "asset_type": "image",
+          "asset_role": "hero_image",
+          "item_type": "individual",
+          "required": true,
+          "requirements": null
+        },
+        {
+          "asset_id": "hero_video",
+          "asset_type": "video",
+          "asset_role": "hero_video",
+          "item_type": "individual",
+          "required": true,
+          "requirements": {
+            "max_duration_sec": 30,
+            "max_size_mb": 3
+          }
+        },
+        {
+          "asset_id": "headline",
+          "asset_type": "text",
+          "asset_role": "headline",
+          "item_type": "individual",
+          "required": true,
+          "requirements": {
+            "max_length": 40
+          }
+        },
+        {
+          "asset_id": "body_text",
+          "asset_type": "text",
+          "asset_role": "body_text",
+          "item_type": "individual",
+          "required": false,
+          "requirements": {
+            "max_length": 90
+          }
+        },
+        {
+          "asset_id": "call_to_action",
+          "asset_type": "text",
+          "asset_role": "call_to_action",
+          "item_type": "individual",
+          "required": false,
+          "requirements": {
+            "max_length": 25
+          }
+        }
+      ],
+      "renders": [
+        {
+          "role": "primary",
+          "dimensions": {
+            "width": 320,
+            "height": 480
+          }
+        },
+        {
+          "role": "companion",
+          "dimensions": {
+            "width": 300,
+            "height": 600
+          }
+        }
+      ],
+      "preview_urls": [],
+      "specs": {
+        "text_limit_variants": [
+          {
+            "label": "Ad with Title Only",
+            "title": 55
+          },
+          {
+            "label": "Ad with Title and Description",
+            "title": 40,
+            "description": 90
+          },
+          {
+            "label": "Ad with Title and Button",
+            "title": 55,
+            "button": 25
+          },
+          {
+            "label": "Ad with Title, Button and Description",
+            "title": 40,
+            "description": 90,
+            "button": 25
+          }
+        ],
+        "min_cards_by_size": {},
+        "image_dimensions": [],
+        "feature_image_dimensions": null,
+        "video_requirements": "Only 1 link required Aspect ratio is vertical 9:16 Should be less than 30 sec and less than 3mb file size",
+        "additional_requirements": [],
+        "optional_requirements": []
+      }
+    },
+    {
+      "format_id": {
+        "agent_url": "https://creative.adcontextprotocol.org",
+        "id": "adzymic-list-008"
+      },
+      "name": "List",
+      "type": "display",
+      "is_responsive": false,
+      "dco_available": false,
+      "assets": [
+        {
+          "asset_id": "hero_image",
+          "asset_type": "image",
+          "asset_role": "hero_image",
+          "item_type": "group",
+          "required": true,
+          "requirements": {
+            "min": 2,
+            "aspect_ratio": "1:1",
+            "width": 400,
+            "height": 400
+          }
+        },
+        {
+          "asset_id": "headline",
+          "asset_type": "text",
+          "asset_role": "headline",
+          "item_type": "individual",
+          "required": true,
+          "requirements": {
+            "max_length": 30
+          }
+        },
+        {
+          "asset_id": "body_text",
+          "asset_type": "text",
+          "asset_role": "body_text",
+          "item_type": "individual",
+          "required": false,
+          "requirements": {
+            "max_length": 90
+          }
+        }
+      ],
+      "renders": [
+        {
+          "role": "primary",
+          "dimensions": {
+            "width": 300,
+            "height": 250
+          }
+        },
+        {
+          "role": "companion",
+          "dimensions": {
+            "width": 300,
+            "height": 600
+          }
+        },
+        {
+          "role": "companion",
+          "dimensions": {
+            "width": 320,
+            "height": 480
+          }
+        },
+        {
+          "role": "companion",
+          "dimensions": {
+            "width": 970,
+            "height": 90
+          }
+        },
+        {
+          "role": "companion",
+          "dimensions": {
+            "width": 728,
+            "height": 90
+          }
+        },
+        {
+          "role": "companion",
+          "dimensions": {
+            "width": 320,
+            "height": 50
+          }
+        },
+        {
+          "role": "companion",
+          "dimensions": {
+            "width": 300,
+            "height": 50
+          }
+        }
+      ],
+      "preview_urls": [],
+      "specs": {
+        "text_limit_variants": [
+          {
+            "label": "Ad with Title Only",
+            "title": 55
+          },
+          {
+            "label": "Ad with Title and Description",
+            "title": 30,
+            "description": 90
+          },
+          {
+            "label": "Ad with Title and Button",
+            "title": 55,
+            "button": 25
+          }
+        ],
+        "min_cards_by_size": {
+          "300x250": 3,
+          "300x600": 6,
+          "970x90": 3,
+          "728x90": 2
+        },
+        "image_dimensions": [
+          "Each Card: 400x400 px or 1:1 Aspect Ratio"
+        ],
+        "feature_image_dimensions": null,
+        "video_requirements": null,
+        "additional_requirements": [],
+        "optional_requirements": []
+      }
+    },
+    {
+      "format_id": {
+        "agent_url": "https://creative.adcontextprotocol.org",
+        "id": "adzymic-feature-scrolled-ad-009"
+      },
+      "name": "Feature Scrolled Ad",
+      "type": "display",
+      "is_responsive": false,
+      "dco_available": false,
+      "assets": [
+        {
+          "asset_id": "hero_image",
+          "asset_type": "image",
+          "asset_role": "hero_image",
+          "item_type": "individual",
+          "required": true,
+          "requirements": null
+        },
+        {
+          "asset_id": "hero_video",
+          "asset_type": "video",
+          "asset_role": "hero_video",
+          "item_type": "individual",
+          "required": false,
+          "requirements": null
+        }
+      ],
+      "renders": [
+        {
+          "role": "primary",
+          "dimensions": {
+            "width": 300,
+            "height": 250
+          }
+        },
+        {
+          "role": "companion",
+          "dimensions": {
+            "width": 320,
+            "height": 480
+          }
+        },
+        {
+          "role": "companion",
+          "dimensions": {
+            "width": 300,
+            "height": 600
+          }
+        }
+      ],
+      "preview_urls": [
+        "http://app.enzymic.co/previews/M4jqVnZ8VMpzABDP"
+      ],
+      "specs": {
+        "text_limit_variants": [
+          {
+            "label": "Ad with Title, Button and Description"
+          }
+        ],
+        "min_cards_by_size": {},
+        "image_dimensions": [],
+        "feature_image_dimensions": null,
+        "video_requirements": "Only 1 needed (but optional as it can be replaced by an image instead)",
+        "additional_requirements": [],
+        "optional_requirements": []
+      }
+    },
+    {
+      "format_id": {
+        "agent_url": "https://creative.adcontextprotocol.org",
+        "id": "adzymic-lead-gen-ad-010"
+      },
+      "name": "Lead Gen Ad",
+      "type": "display",
+      "is_responsive": false,
+      "dco_available": false,
+      "assets": [
+        {
+          "asset_id": "hero_image",
+          "asset_type": "image",
+          "asset_role": "hero_image",
+          "item_type": "individual",
+          "required": true,
+          "requirements": {
+            "aspect_ratio": "2:1",
+            "width": 1040,
+            "height": 520
+          }
+        },
+        {
+          "asset_id": "headline",
+          "asset_type": "text",
+          "asset_role": "headline",
+          "item_type": "individual",
+          "required": true,
+          "requirements": {
+            "max_length": 40
+          }
+        },
+        {
+          "asset_id": "body_text",
+          "asset_type": "text",
+          "asset_role": "body_text",
+          "item_type": "individual",
+          "required": false,
+          "requirements": {
+            "max_length": 200
+          }
+        },
+        {
+          "asset_id": "call_to_action",
+          "asset_type": "text",
+          "asset_role": "call_to_action",
+          "item_type": "individual",
+          "required": false,
+          "requirements": {
+            "max_length": 25
+          }
+        }
+      ],
+      "renders": [
+        {
+          "role": "primary",
+          "dimensions": {
+            "width": 300,
+            "height": 250
+          }
+        },
+        {
+          "role": "companion",
+          "dimensions": {
+            "width": 300,
+            "height": 600
+          }
+        },
+        {
+          "role": "companion",
+          "dimensions": {
+            "width": 320,
+            "height": 480
+          }
+        },
+        {
+          "role": "companion",
+          "dimensions": {
+            "width": 970,
+            "height": 250
+          }
+        }
+      ],
+      "preview_urls": [
+        "http://app.enzymic.co/previews/VMb3Ydp7r2yWm076",
+        "https://app.enzymic.co/previews/25rZK9QNlzneE7mO"
+      ],
+      "specs": {
+        "text_limit_variants": [
+          {
+            "label": "Ad with Title and Description",
+            "title": 40,
+            "description": 200
+          },
+          {
+            "label": "Ad with Title, Button and Description",
+            "title": 40,
+            "description": 200,
+            "button": 25
+          }
+        ],
+        "min_cards_by_size": {},
+        "image_dimensions": [
+          "300x250, 300x600 & 320x480: 1040x520 px or 2:1 Aspect Ratio 970x250 : 1000x562 px or 16:9 Aspect Ratio"
+        ],
+        "feature_image_dimensions": null,
+        "video_requirements": null,
+        "additional_requirements": [],
+        "optional_requirements": []
+      }
+    },
+    {
+      "format_id": {
+        "agent_url": "https://creative.adcontextprotocol.org",
+        "id": "adzymic-in-banner-video-011"
+      },
+      "name": "In-Banner Video",
+      "type": "video",
+      "is_responsive": false,
+      "dco_available": false,
+      "assets": [
+        {
+          "asset_id": "hero_image",
+          "asset_type": "image",
+          "asset_role": "hero_image",
+          "item_type": "individual",
+          "required": true,
+          "requirements": {
+            "aspect_ratio": "1:2"
+          }
+        },
+        {
+          "asset_id": "hero_video",
+          "asset_type": "video",
+          "asset_role": "hero_video",
+          "item_type": "individual",
+          "required": true,
+          "requirements": null
+        }
+      ],
+      "renders": [
+        {
+          "role": "primary",
+          "dimensions": {
+            "width": 300,
+            "height": 250
+          }
+        },
+        {
+          "role": "companion",
+          "dimensions": {
+            "width": 300,
+            "height": 600
+          }
+        },
+        {
+          "role": "companion",
+          "dimensions": {
+            "width": 320,
+            "height": 480
+          }
+        },
+        {
+          "role": "companion",
+          "dimensions": {
+            "width": 970,
+            "height": 250
+          }
+        }
+      ],
+      "preview_urls": [
+        "https://demo.enzymic.co/previews/YX5PdpBW1z98bJDQ"
+      ],
+      "specs": {
+        "text_limit_variants": [],
+        "min_cards_by_size": {},
+        "image_dimensions": [
+          "Banner 300 x 600: 600 x 1200 (1:2) Banner 300 x 250: 600 x 500  (1.2:1) Banner 320 x 480: 640 x 960 (2:3) Banner 970 x 250: 1940 x 500  (3.88:1) Banner Images : should be less than 150Kb each for each size (banner already includes copy, CTA, pictures, logo, policy text, etc) Video : aspect ratio is horizontal 16:9 (recommended length of video is less than 30 sec and file size has to be less than 3MB), Youtube link or mp4"
+        ],
+        "feature_image_dimensions": null,
+        "video_requirements": null,
+        "additional_requirements": [],
+        "optional_requirements": []
+      }
+    },
+    {
+      "format_id": {
+        "agent_url": "https://creative.adcontextprotocol.org",
+        "id": "adzymic-single-native-display-ad-012"
+      },
+      "name": "Single Native Display Ad",
+      "type": "display",
+      "is_responsive": false,
+      "dco_available": true,
+      "assets": [
+        {
+          "asset_id": "hero_image",
+          "asset_type": "image",
+          "asset_role": "hero_image",
+          "item_type": "individual",
+          "required": true,
+          "requirements": {
+            "width": 600,
+            "height": 270
+          }
+        },
+        {
+          "asset_id": "headline",
+          "asset_type": "text",
+          "asset_role": "headline",
+          "item_type": "individual",
+          "required": true,
+          "requirements": {
+            "max_length": 80
+          }
+        },
+        {
+          "asset_id": "body_text",
+          "asset_type": "text",
+          "asset_role": "body_text",
+          "item_type": "individual",
+          "required": false,
+          "requirements": {
+            "max_length": 125
+          }
+        },
+        {
+          "asset_id": "call_to_action",
+          "asset_type": "text",
+          "asset_role": "call_to_action",
+          "item_type": "individual",
+          "required": false,
+          "requirements": {
+            "max_length": 24
+          }
+        }
+      ],
+      "renders": [
+        {
+          "role": "primary",
+          "dimensions": {
+            "width": 300,
+            "height": 250
+          }
+        },
+        {
+          "role": "companion",
+          "dimensions": {
+            "width": 300,
+            "height": 600
+          }
+        },
+        {
+          "role": "companion",
+          "dimensions": {
+            "width": 970,
+            "height": 90
+          }
+        },
+        {
+          "role": "companion",
+          "dimensions": {
+            "width": 728,
+            "height": 90
+          }
+        },
+        {
+          "role": "companion",
+          "dimensions": {
+            "width": 320,
+            "height": 480
+          }
+        },
+        {
+          "role": "companion",
+          "dimensions": {
+            "width": 970,
+            "height": 250
+          }
+        }
+      ],
+      "preview_urls": [
+        "https://app.enzymic.co/previews/YE3P0pJzzNpmZqe4"
+      ],
+      "specs": {
+        "text_limit_variants": [
+          {
+            "label": "Ad with Title,Button and Description (optional)",
+            "title": 80,
+            "description": 125,
+            "button": 24
+          }
+        ],
+        "min_cards_by_size": {},
+        "image_dimensions": [
+          "Banner 300x250: 600x270 px Banner 970x25 0: 840x500 px Banner 300x600: 600x500 px Banner 320x480: 640x480 px Banner 728x90: 456x180 px Banner 970x90: 580180 px"
+        ],
+        "feature_image_dimensions": null,
+        "video_requirements": null,
+        "additional_requirements": [],
+        "optional_requirements": []
+      }
+    },
+    {
+      "format_id": {
+        "agent_url": "https://creative.adcontextprotocol.org",
+        "id": "adzymic-tiles-format-013"
+      },
+      "name": "Tiles Format",
+      "type": "display",
+      "is_responsive": false,
+      "dco_available": true,
+      "assets": [
+        {
+          "asset_id": "hero_image",
+          "asset_type": "image",
+          "asset_role": "hero_image",
+          "item_type": "group",
+          "required": true,
+          "requirements": {
+            "min": 3,
+            "aspect_ratio": "1:1.6",
+            "width": 1200,
+            "height": 750
+          }
+        },
+        {
+          "asset_id": "headline",
+          "asset_type": "text",
+          "asset_role": "headline",
+          "item_type": "individual",
+          "required": true,
+          "requirements": {
+            "max_length": 55
+          }
+        },
+        {
+          "asset_id": "call_to_action",
+          "asset_type": "text",
+          "asset_role": "call_to_action",
+          "item_type": "individual",
+          "required": false,
+          "requirements": {
+            "max_length": 25
+          }
+        }
+      ],
+      "renders": [
+        {
+          "role": "primary",
+          "dimensions": {
+            "width": 1200,
+            "height": 750
+          }
+        }
+      ],
+      "preview_urls": [
+        "http://app.enzymic.co/previews/M4jqVnZ8RWpzABDP"
+      ],
+      "specs": {
+        "text_limit_variants": [
+          {
+            "label": "Ad with Title Only",
+            "title": 55
+          },
+          {
+            "label": "Ad with Title and Description",
+            "description": 80
+          }
+        ],
+        "min_cards_by_size": {
+          "300x250": 3,
+          "300x600": 3,
+          "970x250": 3
+        },
+        "image_dimensions": [
+          "Each tiles : 1200x750 px or 1:1.6 Aspect Ratio or Youtube video Video should be less than 30 sec and less than 3mb in file size"
+        ],
+        "feature_image_dimensions": null,
+        "video_requirements": null,
+        "additional_requirements": [],
+        "optional_requirements": []
+      }
+    },
+    {
+      "format_id": {
+        "agent_url": "https://creative.adcontextprotocol.org",
+        "id": "adzymic-gallery-014"
+      },
+      "name": "Gallery",
+      "type": "display",
+      "is_responsive": false,
+      "dco_available": true,
+      "assets": [
+        {
+          "asset_id": "hero_image",
+          "asset_type": "image",
+          "asset_role": "hero_image",
+          "item_type": "group",
+          "required": true,
+          "requirements": {
+            "min": 4,
+            "aspect_ratio": "8:5",
+            "width": 400,
+            "height": 250
+          }
+        },
+        {
+          "asset_id": "headline",
+          "asset_type": "text",
+          "asset_role": "headline",
+          "item_type": "individual",
+          "required": true,
+          "requirements": {
+            "max_length": 55
+          }
+        },
+        {
+          "asset_id": "body_text",
+          "asset_type": "text",
+          "asset_role": "body_text",
+          "item_type": "individual",
+          "required": false,
+          "requirements": {
+            "max_length": 80
+          }
+        },
+        {
+          "asset_id": "call_to_action",
+          "asset_type": "text",
+          "asset_role": "call_to_action",
+          "item_type": "individual",
+          "required": false,
+          "requirements": {
+            "max_length": 25
+          }
+        }
+      ],
+      "renders": [
+        {
+          "role": "primary",
+          "dimensions": {
+            "width": 300,
+            "height": 250
+          }
+        },
+        {
+          "role": "companion",
+          "dimensions": {
+            "width": 300,
+            "height": 600
+          }
+        },
+        {
+          "role": "companion",
+          "dimensions": {
+            "width": 320,
+            "height": 480
+          }
+        },
+        {
+          "role": "companion",
+          "dimensions": {
+            "width": 970,
+            "height": 250
+          }
+        },
+        {
+          "role": "companion",
+          "dimensions": {
+            "width": 320,
+            "height": 50
+          }
+        },
+        {
+          "role": "companion",
+          "dimensions": {
+            "width": 300,
+            "height": 50
+          }
+        },
+        {
+          "role": "companion",
+          "dimensions": {
+            "width": 320,
+            "height": 100
+          }
+        },
+        {
+          "role": "companion",
+          "dimensions": {
+            "width": 970,
+            "height": 90
+          }
+        },
+        {
+          "role": "companion",
+          "dimensions": {
+            "width": 728,
+            "height": 90
+          }
+        }
+      ],
+      "preview_urls": [
+        "http://app.enzymic.co/previews/8rRGxyv3lOp7Pjbe"
+      ],
+      "specs": {
+        "text_limit_variants": [],
+        "min_cards_by_size": {
+          "970x250": 4,
+          "300x250": 4,
+          "300x600": 4,
+          "320x480": 4
+        },
+        "image_dimensions": [
+          "Horizontal Each Card: 400x250px or 8:5 Aspect Ratio Vertical Each Card: 640x960px or 2:3 Aspect Ratio Square: Each Card: 600x600 or 1:1 Aspect Ratio"
+        ],
+        "feature_image_dimensions": "300x250 or 1.2:1 Aspect Ratio (For Featured Image on 970x250)",
+        "video_requirements": null,
+        "additional_requirements": [],
+        "optional_requirements": []
+      }
+    },
+    {
+      "format_id": {
+        "agent_url": "https://creative.adcontextprotocol.org",
+        "id": "adzymic-mask-scroll-015"
+      },
+      "name": "Mask Scroll",
+      "type": "display",
+      "is_responsive": false,
+      "dco_available": false,
+      "assets": [
+        {
+          "asset_id": "hero_image",
+          "asset_type": "image",
+          "asset_role": "hero_image",
+          "item_type": "group",
+          "required": true,
+          "requirements": {
+            "min": 1
+          }
+        },
+        {
+          "asset_id": "headline",
+          "asset_type": "text",
+          "asset_role": "headline",
+          "item_type": "individual",
+          "required": true,
+          "requirements": {
+            "max_length": 55
+          }
+        },
+        {
+          "asset_id": "body_text",
+          "asset_type": "text",
+          "asset_role": "body_text",
+          "item_type": "individual",
+          "required": false,
+          "requirements": {
+            "max_length": 80
+          }
+        },
+        {
+          "asset_id": "call_to_action",
+          "asset_type": "text",
+          "asset_role": "call_to_action",
+          "item_type": "individual",
+          "required": false,
+          "requirements": {
+            "max_length": 25
+          }
+        }
+      ],
+      "renders": [
+        {
+          "role": "primary",
+          "dimensions": null
+        }
+      ],
+      "preview_urls": [
+        "http://app.enzymic.co/previews/W72kdn3a0Ap4NMaE?size=1"
+      ],
+      "specs": {
+        "text_limit_variants": [],
+        "min_cards_by_size": {
+          "300x250": 4,
+          "300x600": 4,
+          "320x480": 4
+        },
+        "image_dimensions": [],
+        "feature_image_dimensions": null,
+        "video_requirements": null,
+        "additional_requirements": [],
+        "optional_requirements": []
+      }
+    },
+    {
+      "format_id": {
+        "agent_url": "https://creative.adcontextprotocol.org",
+        "id": "adzymic-social-display-ad-facebook-016"
+      },
+      "name": "Social Display Ad - Facebook",
+      "type": "display",
+      "is_responsive": false,
+      "dco_available": false,
+      "assets": [
+        {
+          "asset_id": "hero_image",
+          "asset_type": "image",
+          "asset_role": "hero_image",
+          "item_type": "individual",
+          "required": true,
+          "requirements": null
+        }
+      ],
+      "renders": [
+        {
+          "role": "primary",
+          "dimensions": {
+            "width": 300,
+            "height": 600
+          }
+        },
+        {
+          "role": "companion",
+          "dimensions": {
+            "width": 320,
+            "height": 480
+          }
+        }
+      ],
+      "preview_urls": [
+        "https://app.enzymic.co/previews/3D5VRpRBdKpWZo8x"
+      ],
+      "specs": {
+        "text_limit_variants": [],
+        "min_cards_by_size": {},
+        "image_dimensions": [],
+        "feature_image_dimensions": null,
+        "video_requirements": null,
+        "additional_requirements": [],
+        "optional_requirements": []
+      }
+    },
+    {
+      "format_id": {
+        "agent_url": "https://creative.adcontextprotocol.org",
+        "id": "adzymic-social-display-ad-facebook-carousel-017"
+      },
+      "name": "Social Display Ad - Facebook Carousel",
+      "type": "display",
+      "is_responsive": false,
+      "dco_available": false,
+      "assets": [
+        {
+          "asset_id": "hero_image",
+          "asset_type": "image",
+          "asset_role": "hero_image",
+          "item_type": "individual",
+          "required": true,
+          "requirements": null
+        }
+      ],
+      "renders": [
+        {
+          "role": "primary",
+          "dimensions": {
+            "width": 300,
+            "height": 600
+          }
+        },
+        {
+          "role": "companion",
+          "dimensions": {
+            "width": 320,
+            "height": 480
+          }
+        }
+      ],
+      "preview_urls": [
+        "https://app.enzymic.co/previews/Bj0LRyb6xXyrKO2Z"
+      ],
+      "specs": {
+        "text_limit_variants": [],
+        "min_cards_by_size": {},
+        "image_dimensions": [],
+        "feature_image_dimensions": null,
+        "video_requirements": null,
+        "additional_requirements": [],
+        "optional_requirements": []
+      }
+    },
+    {
+      "format_id": {
+        "agent_url": "https://creative.adcontextprotocol.org",
+        "id": "adzymic-social-display-ad-instagram-018"
+      },
+      "name": "Social Display Ad - Instagram",
+      "type": "display",
+      "is_responsive": false,
+      "dco_available": false,
+      "assets": [
+        {
+          "asset_id": "hero_image",
+          "asset_type": "image",
+          "asset_role": "hero_image",
+          "item_type": "individual",
+          "required": true,
+          "requirements": null
+        }
+      ],
+      "renders": [
+        {
+          "role": "primary",
+          "dimensions": {
+            "width": 300,
+            "height": 600
+          }
+        },
+        {
+          "role": "companion",
+          "dimensions": {
+            "width": 320,
+            "height": 480
+          }
+        }
+      ],
+      "preview_urls": [],
+      "specs": {
+        "text_limit_variants": [],
+        "min_cards_by_size": {},
+        "image_dimensions": [],
+        "feature_image_dimensions": null,
+        "video_requirements": null,
+        "additional_requirements": [],
+        "optional_requirements": []
+      }
+    },
+    {
+      "format_id": {
+        "agent_url": "https://creative.adcontextprotocol.org",
+        "id": "adzymic-social-display-ad-linkedin-019"
+      },
+      "name": "Social Display Ad - LinkedIn",
+      "type": "display",
+      "is_responsive": false,
+      "dco_available": false,
+      "assets": [
+        {
+          "asset_id": "hero_image",
+          "asset_type": "image",
+          "asset_role": "hero_image",
+          "item_type": "individual",
+          "required": true,
+          "requirements": null
+        }
+      ],
+      "renders": [
+        {
+          "role": "primary",
+          "dimensions": {
+            "width": 300,
+            "height": 600
+          }
+        },
+        {
+          "role": "companion",
+          "dimensions": {
+            "width": 320,
+            "height": 480
+          }
+        }
+      ],
+      "preview_urls": [],
+      "specs": {
+        "text_limit_variants": [],
+        "min_cards_by_size": {},
+        "image_dimensions": [],
+        "feature_image_dimensions": null,
+        "video_requirements": null,
+        "additional_requirements": [],
+        "optional_requirements": []
+      }
+    },
+    {
+      "format_id": {
+        "agent_url": "https://creative.adcontextprotocol.org",
+        "id": "adzymic-social-display-ad-tik-tok-020"
+      },
+      "name": "Social Display Ad - Tik Tok",
+      "type": "display",
+      "is_responsive": false,
+      "dco_available": false,
+      "assets": [
+        {
+          "asset_id": "hero_image",
+          "asset_type": "image",
+          "asset_role": "hero_image",
+          "item_type": "individual",
+          "required": true,
+          "requirements": null
+        }
+      ],
+      "renders": [
+        {
+          "role": "primary",
+          "dimensions": {
+            "width": 300,
+            "height": 600
+          }
+        },
+        {
+          "role": "companion",
+          "dimensions": {
+            "width": 320,
+            "height": 480
+          }
+        }
+      ],
+      "preview_urls": [
+        "https://demo.enzymic.co/previews/5WZqd9X5krnbg1EB"
+      ],
+      "specs": {
+        "text_limit_variants": [],
+        "min_cards_by_size": {},
+        "image_dimensions": [],
+        "feature_image_dimensions": null,
+        "video_requirements": null,
+        "additional_requirements": [],
+        "optional_requirements": []
+      }
+    },
+    {
+      "format_id": {
+        "agent_url": "https://creative.adcontextprotocol.org",
+        "id": "adzymic-comparison-slider-021"
+      },
+      "name": "Comparison Slider",
+      "type": "display",
+      "is_responsive": false,
+      "dco_available": false,
+      "assets": [
+        {
+          "asset_id": "hero_image",
+          "asset_type": "image",
+          "asset_role": "hero_image",
+          "item_type": "group",
+          "required": true,
+          "requirements": {
+            "min": 1
+          }
+        }
+      ],
+      "renders": [
+        {
+          "role": "primary",
+          "dimensions": {
+            "width": 300,
+            "height": 250
+          }
+        },
+        {
+          "role": "companion",
+          "dimensions": {
+            "width": 300,
+            "height": 600
+          }
+        },
+        {
+          "role": "companion",
+          "dimensions": {
+            "width": 320,
+            "height": 480
+          }
+        },
+        {
+          "role": "companion",
+          "dimensions": {
+            "width": 728,
+            "height": 90
+          }
+        },
+        {
+          "role": "companion",
+          "dimensions": {
+            "width": 320,
+            "height": 50
+          }
+        },
+        {
+          "role": "companion",
+          "dimensions": {
+            "width": 160,
+            "height": 600
+          }
+        }
+      ],
+      "preview_urls": [],
+      "specs": {
+        "text_limit_variants": [],
+        "min_cards_by_size": {
+          "300x250": 600,
+          "300x600": 600,
+          "320x480": 640,
+          "728x90": 1,
+          "320x50": 640,
+          "160x600": 320
+        },
+        "image_dimensions": [],
+        "feature_image_dimensions": null,
+        "video_requirements": null,
+        "additional_requirements": [],
+        "optional_requirements": []
+      }
+    },
+    {
+      "format_id": {
+        "agent_url": "https://creative.adcontextprotocol.org",
+        "id": "adzymic-product-color-022"
+      },
+      "name": "Product Color",
+      "type": "display",
+      "is_responsive": false,
+      "dco_available": false,
+      "assets": [
+        {
+          "asset_id": "hero_image",
+          "asset_type": "image",
+          "asset_role": "hero_image",
+          "item_type": "individual",
+          "required": true,
+          "requirements": {
+            "aspect_ratio": "13:5",
+            "width": 520,
+            "height": 200
+          }
+        },
+        {
+          "asset_id": "headline",
+          "asset_type": "text",
+          "asset_role": "headline",
+          "item_type": "individual",
+          "required": true,
+          "requirements": {
+            "max_length": 35
+          }
+        },
+        {
+          "asset_id": "body_text",
+          "asset_type": "text",
+          "asset_role": "body_text",
+          "item_type": "individual",
+          "required": false,
+          "requirements": {
+            "max_length": 180
+          }
+        },
+        {
+          "asset_id": "call_to_action",
+          "asset_type": "text",
+          "asset_role": "call_to_action",
+          "item_type": "individual",
+          "required": false,
+          "requirements": {
+            "max_length": 10
+          }
+        }
+      ],
+      "renders": [
+        {
+          "role": "primary",
+          "dimensions": {
+            "width": 300,
+            "height": 250
+          }
+        },
+        {
+          "role": "companion",
+          "dimensions": {
+            "width": 300,
+            "height": 600
+          }
+        },
+        {
+          "role": "companion",
+          "dimensions": {
+            "width": 320,
+            "height": 480
+          }
+        },
+        {
+          "role": "companion",
+          "dimensions": {
+            "width": 970,
+            "height": 250
+          }
+        }
+      ],
+      "preview_urls": [
+        "http://app.enzymic.co/previews/7AWoqy0q1Vpl4RBE"
+      ],
+      "specs": {
+        "text_limit_variants": [
+          {
+            "label": "Ad with Title, Button and Description",
+            "title": 35,
+            "description": 180,
+            "button": 10
+          }
+        ],
+        "min_cards_by_size": {},
+        "image_dimensions": [
+          "300x250: 520 x 200 px or 13:5 Aspect Ratio 300x600: 600 x 300 px or 3:2 Aspect Ratio 320x480: 600 x 300 px or 3:2 Aspect Ratio 970x250: 600x 300. 3:2 Aspect Ratio (should be less than 500Kb)"
+        ],
+        "feature_image_dimensions": null,
+        "video_requirements": null,
+        "additional_requirements": [],
+        "optional_requirements": []
+      }
+    },
+    {
+      "format_id": {
+        "agent_url": "https://creative.adcontextprotocol.org",
+        "id": "adzymic-3d-cube-023"
+      },
+      "name": "3D Cube",
+      "type": "display",
+      "is_responsive": false,
+      "dco_available": false,
+      "assets": [
+        {
+          "asset_id": "hero_image",
+          "asset_type": "image",
+          "asset_role": "hero_image",
+          "item_type": "group",
+          "required": true,
+          "requirements": {
+            "min": 1
+          }
+        }
+      ],
+      "renders": [
+        {
+          "role": "primary",
+          "dimensions": {
+            "width": 300,
+            "height": 250
+          }
+        },
+        {
+          "role": "companion",
+          "dimensions": {
+            "width": 300,
+            "height": 600
+          }
+        },
+        {
+          "role": "companion",
+          "dimensions": {
+            "width": 320,
+            "height": 480
+          }
+        },
+        {
+          "role": "companion",
+          "dimensions": {
+            "width": 728,
+            "height": 90
+          }
+        },
+        {
+          "role": "companion",
+          "dimensions": {
+            "width": 320,
+            "height": 50
+          }
+        },
+        {
+          "role": "companion",
+          "dimensions": {
+            "width": 160,
+            "height": 600
+          }
+        }
+      ],
+      "preview_urls": [
+        "https://app.enzymic.co/previews/wrZ8GpgBNwyaxoP7"
+      ],
+      "specs": {
+        "text_limit_variants": [],
+        "min_cards_by_size": {
+          "300x250": 600,
+          "300x600": 600,
+          "320x480": 640,
+          "728x90": 1,
+          "320x50": 640,
+          "160x600": 320
+        },
+        "image_dimensions": [],
+        "feature_image_dimensions": null,
+        "video_requirements": null,
+        "additional_requirements": [],
+        "optional_requirements": []
+      }
+    },
+    {
+      "format_id": {
+        "agent_url": "https://creative.adcontextprotocol.org",
+        "id": "adzymic-choose-scratch-024"
+      },
+      "name": "Choose & Scratch",
+      "type": "display",
+      "is_responsive": false,
+      "dco_available": false,
+      "assets": [
+        {
+          "asset_id": "hero_image",
+          "asset_type": "image",
+          "asset_role": "hero_image",
+          "item_type": "group",
+          "required": true,
+          "requirements": {
+            "min": 1
+          }
+        }
+      ],
+      "renders": [
+        {
+          "role": "primary",
+          "dimensions": {
+            "width": 970,
+            "height": 250
+          }
+        },
+        {
+          "role": "companion",
+          "dimensions": {
+            "width": 300,
+            "height": 600
+          }
+        },
+        {
+          "role": "companion",
+          "dimensions": {
+            "width": 320,
+            "height": 480
+          }
+        }
+      ],
+      "preview_urls": [
+        "http://app.enzymic.co/previews/K4BG0nP16oym6Egq",
+        "https://app.enzymic.co/previews/Bj0LRyboLkprKO2Z",
+        "https://app.enzymic.co/previews/YX5PdpBWBw98bJDQ"
+      ],
+      "specs": {
+        "text_limit_variants": [
+          {
+            "label": "Ad with Title, Button & Description"
+          }
+        ],
+        "min_cards_by_size": {
+          "970x250": 644,
+          "300x600": 600,
+          "20x480": 640
+        },
+        "image_dimensions": [],
+        "feature_image_dimensions": null,
+        "video_requirements": null,
+        "additional_requirements": [],
+        "optional_requirements": []
+      }
+    },
+    {
+      "format_id": {
+        "agent_url": "https://creative.adcontextprotocol.org",
+        "id": "adzymic-vertical-stories-025"
+      },
+      "name": "Vertical Stories",
+      "type": "display",
+      "is_responsive": false,
+      "dco_available": false,
+      "assets": [
+        {
+          "asset_id": "hero_image",
+          "asset_type": "image",
+          "asset_role": "hero_image",
+          "item_type": "group",
+          "required": true,
+          "requirements": {
+            "min": 250
+          }
+        }
+      ],
+      "renders": [
+        {
+          "role": "primary",
+          "dimensions": {
+            "width": 300,
+            "height": 250
+          }
+        },
+        {
+          "role": "companion",
+          "dimensions": {
+            "width": 300,
+            "height": 600
+          }
+        },
+        {
+          "role": "companion",
+          "dimensions": {
+            "width": 320,
+            "height": 480
+          }
+        }
+      ],
+      "preview_urls": [],
+      "specs": {
+        "text_limit_variants": [
+          {
+            "label": "Ad with Title, Button & Description"
+          }
+        ],
+        "min_cards_by_size": {},
+        "image_dimensions": [],
+        "feature_image_dimensions": null,
+        "video_requirements": null,
+        "additional_requirements": [],
+        "optional_requirements": []
+      }
+    },
+    {
+      "format_id": {
+        "agent_url": "https://creative.adcontextprotocol.org",
+        "id": "adzymic-card-swiper-026"
+      },
+      "name": "Card Swiper",
+      "type": "display",
+      "is_responsive": false,
+      "dco_available": false,
+      "assets": [
+        {
+          "asset_id": "hero_image",
+          "asset_type": "image",
+          "asset_role": "hero_image",
+          "item_type": "group",
+          "required": true,
+          "requirements": {
+            "min": 250
+          }
+        }
+      ],
+      "renders": [
+        {
+          "role": "primary",
+          "dimensions": {
+            "width": 300,
+            "height": 250
+          }
+        },
+        {
+          "role": "companion",
+          "dimensions": {
+            "width": 300,
+            "height": 600
+          }
+        },
+        {
+          "role": "companion",
+          "dimensions": {
+            "width": 320,
+            "height": 480
+          }
+        }
+      ],
+      "preview_urls": [
+        "https://app.enzymic.co/previews/GMLe1yGYOZ9Oxb4P",
+        "https://app.enzymic.co/previews/M4jqVnZOWDyzABDP"
+      ],
+      "specs": {
+        "text_limit_variants": [
+          {
+            "label": "Ad with Title, Button & Description"
+          }
+        ],
+        "min_cards_by_size": {},
+        "image_dimensions": [],
+        "feature_image_dimensions": null,
+        "video_requirements": null,
+        "additional_requirements": [],
+        "optional_requirements": []
+      }
+    },
+    {
+      "format_id": {
+        "agent_url": "https://creative.adcontextprotocol.org",
+        "id": "adzymic-full-image-gallery-027"
+      },
+      "name": "Full Image Gallery",
+      "type": "display",
+      "is_responsive": false,
+      "dco_available": false,
+      "assets": [
+        {
+          "asset_id": "hero_image",
+          "asset_type": "image",
+          "asset_role": "hero_image",
+          "item_type": "group",
+          "required": true,
+          "requirements": {
+            "min": 1
+          }
+        }
+      ],
+      "renders": [
+        {
+          "role": "primary",
+          "dimensions": {
+            "width": 300,
+            "height": 600
+          }
+        },
+        {
+          "role": "companion",
+          "dimensions": {
+            "width": 160,
+            "height": 600
+          }
+        },
+        {
+          "role": "companion",
+          "dimensions": {
+            "width": 300,
+            "height": 250
+          }
+        },
+        {
+          "role": "companion",
+          "dimensions": {
+            "width": 320,
+            "height": 480
+          }
+        }
+      ],
+      "preview_urls": [
+        "https://app.enzymic.co/previews/2G04VyEWEP9NA7rq"
+      ],
+      "specs": {
+        "text_limit_variants": [
+          {
+            "label": "Ad with Title, Button & Description"
+          }
+        ],
+        "min_cards_by_size": {},
+        "image_dimensions": [],
+        "feature_image_dimensions": null,
+        "video_requirements": null,
+        "additional_requirements": [],
+        "optional_requirements": []
+      }
+    },
+    {
+      "format_id": {
+        "agent_url": "https://creative.adcontextprotocol.org",
+        "id": "adzymic-tap-to-win-game-028"
+      },
+      "name": "Tap to Win Game",
+      "type": "display",
+      "is_responsive": false,
+      "dco_available": false,
+      "assets": [
+        {
+          "asset_id": "hero_image",
+          "asset_type": "image",
+          "asset_role": "hero_image",
+          "item_type": "group",
+          "required": true,
+          "requirements": {
+            "min": 90
+          }
+        },
+        {
+          "asset_id": "headline",
+          "asset_type": "text",
+          "asset_role": "headline",
+          "item_type": "individual",
+          "required": true,
+          "requirements": {
+            "max_length": 60
+          }
+        },
+        {
+          "asset_id": "body_text",
+          "asset_type": "text",
+          "asset_role": "body_text",
+          "item_type": "individual",
+          "required": false,
+          "requirements": {
+            "max_length": 220
+          }
+        }
+      ],
+      "renders": [
+        {
+          "role": "primary",
+          "dimensions": {
+            "width": 300,
+            "height": 600
+          }
+        }
+      ],
+      "preview_urls": [
+        "https://demo.enzymic.co/previews/Mb3Ydp75qYnWm076"
+      ],
+      "specs": {
+        "text_limit_variants": [
+          {
+            "label": "Ad Fields",
+            "title": 60,
+            "description": 220
+          }
+        ],
+        "min_cards_by_size": {},
+        "image_dimensions": [],
+        "feature_image_dimensions": null,
+        "video_requirements": null,
+        "additional_requirements": [],
+        "optional_requirements": []
+      }
+    },
+    {
+      "format_id": {
+        "agent_url": "https://creative.adcontextprotocol.org",
+        "id": "adzymic-3d-parallax-029"
+      },
+      "name": "3D Parallax",
+      "type": "display",
+      "is_responsive": false,
+      "dco_available": false,
+      "assets": [
+        {
+          "asset_id": "hero_image",
+          "asset_type": "image",
+          "asset_role": "hero_image",
+          "item_type": "group",
+          "required": true,
+          "requirements": {
+            "min": 250
+          }
+        },
+        {
+          "asset_id": "body_text",
+          "asset_type": "text",
+          "asset_role": "body_text",
+          "item_type": "individual",
+          "required": false,
+          "requirements": {
+            "max_length": 33
+          }
+        }
+      ],
+      "renders": [
+        {
+          "role": "primary",
+          "dimensions": {
+            "width": 300,
+            "height": 250
+          }
+        },
+        {
+          "role": "companion",
+          "dimensions": {
+            "width": 300,
+            "height": 600
+          }
+        },
+        {
+          "role": "companion",
+          "dimensions": {
+            "width": 320,
+            "height": 480
+          }
+        }
+      ],
+      "preview_urls": [
+        "https://app.enzymic.co/previews/Ve6o0ylK86n5zYKm"
+      ],
+      "specs": {
+        "text_limit_variants": [
+          {
+            "label": "Ad Fields",
+            "description": 33
+          }
+        ],
+        "min_cards_by_size": {},
+        "image_dimensions": [],
+        "feature_image_dimensions": null,
+        "video_requirements": null,
+        "additional_requirements": [],
+        "optional_requirements": []
+      }
+    },
+    {
+      "format_id": {
+        "agent_url": "https://creative.adcontextprotocol.org",
+        "id": "adzymic-tilt-move-030"
+      },
+      "name": "Tilt Move",
+      "type": "display",
+      "is_responsive": false,
+      "dco_available": false,
+      "assets": [
+        {
+          "asset_id": "hero_image",
+          "asset_type": "image",
+          "asset_role": "hero_image",
+          "item_type": "group",
+          "required": true,
+          "requirements": {
+            "min": 1
+          }
+        }
+      ],
+      "renders": [
+        {
+          "role": "primary",
+          "dimensions": {
+            "width": 300,
+            "height": 600
+          }
+        }
+      ],
+      "preview_urls": [
+        "https://demo.enzymic.co/previews/qYLJD9M8MVpBb4w6"
+      ],
+      "specs": {
+        "text_limit_variants": [
+          {
+            "label": "Ad Fields"
+          }
+        ],
+        "min_cards_by_size": {},
+        "image_dimensions": [],
+        "feature_image_dimensions": null,
+        "video_requirements": null,
+        "additional_requirements": [],
+        "optional_requirements": []
+      }
+    },
+    {
+      "format_id": {
+        "agent_url": "https://creative.adcontextprotocol.org",
+        "id": "adzymic-shake-reveal-031"
+      },
+      "name": "Shake & Reveal",
+      "type": "display",
+      "is_responsive": false,
+      "dco_available": false,
+      "assets": [
+        {
+          "asset_id": "hero_image",
+          "asset_type": "image",
+          "asset_role": "hero_image",
+          "item_type": "group",
+          "required": true,
+          "requirements": {
+            "min": 1
+          }
+        },
+        {
+          "asset_id": "headline",
+          "asset_type": "text",
+          "asset_role": "headline",
+          "item_type": "individual",
+          "required": true,
+          "requirements": {
+            "max_length": 45
+          }
+        }
+      ],
+      "renders": [
+        {
+          "role": "primary",
+          "dimensions": {
+            "width": 300,
+            "height": 600
+          }
+        }
+      ],
+      "preview_urls": [
+        "https://demo.enzymic.co/previews/jxX3Ep27gg9AqK1Y"
+      ],
+      "specs": {
+        "text_limit_variants": [
+          {
+            "label": "Ad Fields",
+            "title": 45
+          }
+        ],
+        "min_cards_by_size": {},
+        "image_dimensions": [],
+        "feature_image_dimensions": null,
+        "video_requirements": null,
+        "additional_requirements": [],
+        "optional_requirements": []
+      }
+    },
+    {
+      "format_id": {
+        "agent_url": "https://creative.adcontextprotocol.org",
+        "id": "adzymic-horizontal-video-032"
+      },
+      "name": "Horizontal Video",
+      "type": "video",
+      "is_responsive": false,
+      "dco_available": false,
+      "assets": [
+        {
+          "asset_id": "hero_image",
+          "asset_type": "image",
+          "asset_role": "hero_image",
+          "item_type": "individual",
+          "required": true,
+          "requirements": null
+        },
+        {
+          "asset_id": "hero_video",
+          "asset_type": "video",
+          "asset_role": "hero_video",
+          "item_type": "individual",
+          "required": true,
+          "requirements": {
+            "max_duration_sec": 30,
+            "max_size_mb": 3
+          }
+        }
+      ],
+      "renders": [
+        {
+          "role": "primary",
+          "dimensions": {
+            "width": 970,
+            "height": 250
+          }
+        }
+      ],
+      "preview_urls": [
+        "https://demo.enzymic.co/previews/dOPBWpkZMry3r6aD"
+      ],
+      "specs": {
+        "text_limit_variants": [
+          {
+            "label": "Ad Fields"
+          }
+        ],
+        "min_cards_by_size": {},
+        "image_dimensions": [],
+        "feature_image_dimensions": null,
+        "video_requirements": "Only 1 video should be less than 30 sec and less than 3mb in file size",
+        "additional_requirements": [],
+        "optional_requirements": []
+      }
+    },
+    {
+      "format_id": {
+        "agent_url": "https://creative.adcontextprotocol.org",
+        "id": "adzymic-video-hotspot-033"
+      },
+      "name": "Video Hotspot",
+      "type": "video",
+      "is_responsive": false,
+      "dco_available": false,
+      "assets": [
+        {
+          "asset_id": "hero_image",
+          "asset_type": "image",
+          "asset_role": "hero_image",
+          "item_type": "group",
+          "required": true,
+          "requirements": {
+            "min": 1
+          }
+        },
+        {
+          "asset_id": "hero_video",
+          "asset_type": "video",
+          "asset_role": "hero_video",
+          "item_type": "individual",
+          "required": true,
+          "requirements": null
+        },
+        {
+          "asset_id": "headline",
+          "asset_type": "text",
+          "asset_role": "headline",
+          "item_type": "individual",
+          "required": true,
+          "requirements": {
+            "max_length": 50
+          }
+        },
+        {
+          "asset_id": "body_text",
+          "asset_type": "text",
+          "asset_role": "body_text",
+          "item_type": "individual",
+          "required": false,
+          "requirements": {
+            "max_length": 60
+          }
+        }
+      ],
+      "renders": [
+        {
+          "role": "primary",
+          "dimensions": {
+            "width": 970,
+            "height": 250
+          }
+        },
+        {
+          "role": "companion",
+          "dimensions": {
+            "width": 300,
+            "height": 600
+          }
+        },
+        {
+          "role": "companion",
+          "dimensions": {
+            "width": 300,
+            "height": 250
+          }
+        }
+      ],
+      "preview_urls": [
+        "https://app.enzymic.co/previews/Aw1b39NzYD9rqBKz"
+      ],
+      "specs": {
+        "text_limit_variants": [
+          {
+            "label": "Ad Fields",
+            "title": 50,
+            "description": 60
+          }
+        ],
+        "min_cards_by_size": {},
+        "image_dimensions": [],
+        "feature_image_dimensions": null,
+        "video_requirements": null,
+        "additional_requirements": [],
+        "optional_requirements": []
+      }
+    },
+    {
+      "format_id": {
+        "agent_url": "https://creative.adcontextprotocol.org",
+        "id": "adzymic-scratch-show-034"
+      },
+      "name": "Scratch & Show",
+      "type": "display",
+      "is_responsive": false,
+      "dco_available": false,
+      "assets": [
+        {
+          "asset_id": "hero_image",
+          "asset_type": "image",
+          "asset_role": "hero_image",
+          "item_type": "group",
+          "required": true,
+          "requirements": {
+            "min": 1
+          }
+        },
+        {
+          "asset_id": "headline",
+          "asset_type": "text",
+          "asset_role": "headline",
+          "item_type": "individual",
+          "required": true,
+          "requirements": {
+            "max_length": 80
+          }
+        },
+        {
+          "asset_id": "body_text",
+          "asset_type": "text",
+          "asset_role": "body_text",
+          "item_type": "individual",
+          "required": false,
+          "requirements": {
+            "max_length": 120
+          }
+        }
+      ],
+      "renders": [
+        {
+          "role": "primary",
+          "dimensions": {
+            "width": 300,
+            "height": 600
+          }
+        },
+        {
+          "role": "companion",
+          "dimensions": {
+            "width": 320,
+            "height": 480
+          }
+        }
+      ],
+      "preview_urls": [
+        "https://app.enzymic.co/previews/3D5VRpRk6b9WZo8x"
+      ],
+      "specs": {
+        "text_limit_variants": [
+          {
+            "label": "Ad Fields",
+            "title": 80,
+            "description": 120
+          }
+        ],
+        "min_cards_by_size": {},
+        "image_dimensions": [],
+        "feature_image_dimensions": null,
+        "video_requirements": null,
+        "additional_requirements": [],
+        "optional_requirements": []
+      }
+    },
+    {
+      "format_id": {
+        "agent_url": "https://creative.adcontextprotocol.org",
+        "id": "adzymic-combo-mix-035"
+      },
+      "name": "Combo & Mix",
+      "type": "display",
+      "is_responsive": false,
+      "dco_available": false,
+      "assets": [
+        {
+          "asset_id": "hero_image",
+          "asset_type": "image",
+          "asset_role": "hero_image",
+          "item_type": "group",
+          "required": true,
+          "requirements": {
+            "min": 1
+          }
+        },
+        {
+          "asset_id": "headline",
+          "asset_type": "text",
+          "asset_role": "headline",
+          "item_type": "individual",
+          "required": true,
+          "requirements": {
+            "max_length": 25
+          }
+        },
+        {
+          "asset_id": "body_text",
+          "asset_type": "text",
+          "asset_role": "body_text",
+          "item_type": "individual",
+          "required": false,
+          "requirements": {
+            "max_length": 75
+          }
+        }
+      ],
+      "renders": [
+        {
+          "role": "primary",
+          "dimensions": {
+            "width": 300,
+            "height": 250
+          }
+        },
+        {
+          "role": "companion",
+          "dimensions": {
+            "width": 300,
+            "height": 600
+          }
+        },
+        {
+          "role": "companion",
+          "dimensions": {
+            "width": 970,
+            "height": 250
+          }
+        }
+      ],
+      "preview_urls": [
+        "https://app.enzymic.co/previews/7Rvag9w72K9QlmjD"
+      ],
+      "specs": {
+        "text_limit_variants": [
+          {
+            "label": "Ad Fields",
+            "title": 25,
+            "description": 75
+          }
+        ],
+        "min_cards_by_size": {},
+        "image_dimensions": [],
+        "feature_image_dimensions": null,
+        "video_requirements": null,
+        "additional_requirements": [],
+        "optional_requirements": []
+      }
+    },
+    {
+      "format_id": {
+        "agent_url": "https://creative.adcontextprotocol.org",
+        "id": "adzymic-chatbot-036"
+      },
+      "name": "ChatBot",
+      "type": "display",
+      "is_responsive": false,
+      "dco_available": false,
+      "assets": [
+        {
+          "asset_id": "hero_image",
+          "asset_type": "image",
+          "asset_role": "hero_image",
+          "item_type": "group",
+          "required": true,
+          "requirements": {
+            "min": 1
+          }
+        },
+        {
+          "asset_id": "headline",
+          "asset_type": "text",
+          "asset_role": "headline",
+          "item_type": "individual",
+          "required": true,
+          "requirements": {
+            "max_length": 30
+          }
+        }
+      ],
+      "renders": [
+        {
+          "role": "primary",
+          "dimensions": {
+            "width": 300,
+            "height": 600
+          }
+        }
+      ],
+      "preview_urls": [
+        "https://app.enzymic.co/previews/Mb3Ydp75YonWm076"
+      ],
+      "specs": {
+        "text_limit_variants": [
+          {
+            "label": "Ad Fields",
+            "title": 30
+          }
+        ],
+        "min_cards_by_size": {},
+        "image_dimensions": [],
+        "feature_image_dimensions": null,
+        "video_requirements": null,
+        "additional_requirements": [],
+        "optional_requirements": []
+      }
+    },
+    {
+      "format_id": {
+        "agent_url": "https://creative.adcontextprotocol.org",
+        "id": "adzymic-app-download-037"
+      },
+      "name": "App Download",
+      "type": "display",
+      "is_responsive": false,
+      "dco_available": false,
+      "assets": [
+        {
+          "asset_id": "hero_image",
+          "asset_type": "image",
+          "asset_role": "hero_image",
+          "item_type": "group",
+          "required": true,
+          "requirements": {
+            "min": 1
+          }
+        },
+        {
+          "asset_id": "headline",
+          "asset_type": "text",
+          "asset_role": "headline",
+          "item_type": "individual",
+          "required": true,
+          "requirements": {
+            "max_length": 40
+          }
+        }
+      ],
+      "renders": [
+        {
+          "role": "primary",
+          "dimensions": {
+            "width": 300,
+            "height": 250
+          }
+        },
+        {
+          "role": "companion",
+          "dimensions": {
+            "width": 300,
+            "height": 600
+          }
+        },
+        {
+          "role": "companion",
+          "dimensions": {
+            "width": 320,
+            "height": 480
+          }
+        },
+        {
+          "role": "companion",
+          "dimensions": {
+            "width": 320,
+            "height": 50
+          }
+        },
+        {
+          "role": "companion",
+          "dimensions": {
+            "width": 320,
+            "height": 100
+          }
+        },
+        {
+          "role": "companion",
+          "dimensions": {
+            "width": 480,
+            "height": 320
+          }
+        }
+      ],
+      "preview_urls": [
+        "https://demo.enzymic.co/previews/eKlG09m2V7n8QrzY"
+      ],
+      "specs": {
+        "text_limit_variants": [
+          {
+            "label": "Ad Fields",
+            "title": 40
+          }
+        ],
+        "min_cards_by_size": {},
+        "image_dimensions": [],
+        "feature_image_dimensions": null,
+        "video_requirements": null,
+        "additional_requirements": [],
+        "optional_requirements": []
+      }
+    },
+    {
+      "format_id": {
+        "agent_url": "https://creative.adcontextprotocol.org",
+        "id": "adzymic-countdown-038"
+      },
+      "name": "Countdown",
+      "type": "display",
+      "is_responsive": false,
+      "dco_available": false,
+      "assets": [
+        {
+          "asset_id": "hero_image",
+          "asset_type": "image",
+          "asset_role": "hero_image",
+          "item_type": "group",
+          "required": true,
+          "requirements": {
+            "min": 1
+          }
+        }
+      ],
+      "renders": [
+        {
+          "role": "primary",
+          "dimensions": {
+            "width": 300,
+            "height": 250
+          }
+        },
+        {
+          "role": "companion",
+          "dimensions": {
+            "width": 728,
+            "height": 90
+          }
+        },
+        {
+          "role": "companion",
+          "dimensions": {
+            "width": 970,
+            "height": 250
+          }
+        },
+        {
+          "role": "companion",
+          "dimensions": {
+            "width": 300,
+            "height": 600
+          }
+        },
+        {
+          "role": "companion",
+          "dimensions": {
+            "width": 320,
+            "height": 480
+          }
+        }
+      ],
+      "preview_urls": [
+        "https://app.enzymic.co/previews/3D5VRpRkjr9WZo8x"
+      ],
+      "specs": {
+        "text_limit_variants": [
+          {
+            "label": "Ad Fields"
+          }
+        ],
+        "min_cards_by_size": {},
+        "image_dimensions": [],
+        "feature_image_dimensions": null,
+        "video_requirements": null,
+        "additional_requirements": [],
+        "optional_requirements": []
+      }
+    },
+    {
+      "format_id": {
+        "agent_url": "https://creative.adcontextprotocol.org",
+        "id": "adzymic-card-swiper-with-text-039"
+      },
+      "name": "Card Swiper with Text",
+      "type": "display",
+      "is_responsive": false,
+      "dco_available": false,
+      "assets": [
+        {
+          "asset_id": "hero_image",
+          "asset_type": "image",
+          "asset_role": "hero_image",
+          "item_type": "group",
+          "required": true,
+          "requirements": {
+            "min": 250
+          }
+        }
+      ],
+      "renders": [
+        {
+          "role": "primary",
+          "dimensions": {
+            "width": 300,
+            "height": 250
+          }
+        },
+        {
+          "role": "companion",
+          "dimensions": {
+            "width": 300,
+            "height": 600
+          }
+        },
+        {
+          "role": "companion",
+          "dimensions": {
+            "width": 320,
+            "height": 480
+          }
+        }
+      ],
+      "preview_urls": [
+        "https://app.enzymic.co/previews/bMwJ6yx8YDyD5kKB",
+        "https://app.enzymic.co/previews/27kaj98X0X9v0YQd",
+        "https://app.enzymic.co/previews/r2Nwv9avlNnJG6RA"
+      ],
+      "specs": {
+        "text_limit_variants": [
+          {
+            "label": "Ad with Title, Button & Description"
+          }
+        ],
+        "min_cards_by_size": {},
+        "image_dimensions": [],
+        "feature_image_dimensions": null,
+        "video_requirements": null,
+        "additional_requirements": [],
+        "optional_requirements": []
+      }
+    },
+    {
+      "format_id": {
+        "agent_url": "https://creative.adcontextprotocol.org",
+        "id": "adzymic-marketplace-product-gallery-with-video-040"
+      },
+      "name": "Marketplace Product Gallery with Video",
+      "type": "video",
+      "is_responsive": false,
+      "dco_available": false,
+      "assets": [
+        {
+          "asset_id": "hero_image",
+          "asset_type": "image",
+          "asset_role": "hero_image",
+          "item_type": "group",
+          "required": true,
+          "requirements": {
+            "min": 1
+          }
+        },
+        {
+          "asset_id": "hero_video",
+          "asset_type": "video",
+          "asset_role": "hero_video",
+          "item_type": "individual",
+          "required": true,
+          "requirements": null
+        },
+        {
+          "asset_id": "body_text",
+          "asset_type": "text",
+          "asset_role": "body_text",
+          "item_type": "individual",
+          "required": false,
+          "requirements": {
+            "max_length": 30
+          }
+        }
+      ],
+      "renders": [
+        {
+          "role": "primary",
+          "dimensions": {
+            "width": 300,
+            "height": 600
+          }
+        },
+        {
+          "role": "companion",
+          "dimensions": {
+            "width": 320,
+            "height": 480
+          }
+        }
+      ],
+      "preview_urls": [
+        "https://demo.enzymic.co/previews/bKEAX94Da8975N8G"
+      ],
+      "specs": {
+        "text_limit_variants": [
+          {
+            "label": "Ad Fields",
+            "description": 30
+          }
+        ],
+        "min_cards_by_size": {},
+        "image_dimensions": [],
+        "feature_image_dimensions": null,
+        "video_requirements": null,
+        "additional_requirements": [],
+        "optional_requirements": []
+      }
+    },
+    {
+      "format_id": {
+        "agent_url": "https://creative.adcontextprotocol.org",
+        "id": "adzymic-product-carousel-041"
+      },
+      "name": "Product Carousel",
+      "type": "display",
+      "is_responsive": false,
+      "dco_available": false,
+      "assets": [
+        {
+          "asset_id": "hero_image",
+          "asset_type": "image",
+          "asset_role": "hero_image",
+          "item_type": "group",
+          "required": true,
+          "requirements": {
+            "min": 1
+          }
+        },
+        {
+          "asset_id": "headline",
+          "asset_type": "text",
+          "asset_role": "headline",
+          "item_type": "individual",
+          "required": true,
+          "requirements": {
+            "max_length": 65
+          }
+        },
+        {
+          "asset_id": "body_text",
+          "asset_type": "text",
+          "asset_role": "body_text",
+          "item_type": "individual",
+          "required": false,
+          "requirements": {
+            "max_length": 90
+          }
+        }
+      ],
+      "renders": [
+        {
+          "role": "primary",
+          "dimensions": {
+            "width": 300,
+            "height": 600
+          }
+        },
+        {
+          "role": "companion",
+          "dimensions": {
+            "width": 320,
+            "height": 480
+          }
+        }
+      ],
+      "preview_urls": [
+        "https://app.enzymic.co/previews/eKlG09m2Lbn8QrzY"
+      ],
+      "specs": {
+        "text_limit_variants": [
+          {
+            "label": "Ad Fields",
+            "title": 65,
+            "description": 90
+          }
+        ],
+        "min_cards_by_size": {},
+        "image_dimensions": [],
+        "feature_image_dimensions": null,
+        "video_requirements": null,
+        "additional_requirements": [],
+        "optional_requirements": []
+      }
+    },
+    {
+      "format_id": {
+        "agent_url": "https://creative.adcontextprotocol.org",
+        "id": "adzymic-product-carousel-with-location-042"
+      },
+      "name": "Product Carousel with Location",
+      "type": "display",
+      "is_responsive": false,
+      "dco_available": false,
+      "assets": [
+        {
+          "asset_id": "hero_image",
+          "asset_type": "image",
+          "asset_role": "hero_image",
+          "item_type": "group",
+          "required": true,
+          "requirements": {
+            "min": 1
+          }
+        },
+        {
+          "asset_id": "headline",
+          "asset_type": "text",
+          "asset_role": "headline",
+          "item_type": "individual",
+          "required": true,
+          "requirements": {
+            "max_length": 65
+          }
+        },
+        {
+          "asset_id": "body_text",
+          "asset_type": "text",
+          "asset_role": "body_text",
+          "item_type": "individual",
+          "required": false,
+          "requirements": {
+            "max_length": 80
+          }
+        }
+      ],
+      "renders": [
+        {
+          "role": "primary",
+          "dimensions": {
+            "width": 300,
+            "height": 600
+          }
+        },
+        {
+          "role": "companion",
+          "dimensions": {
+            "width": 320,
+            "height": 480
+          }
+        }
+      ],
+      "preview_urls": [
+        "https://demo.enzymic.co/previews/bMwJ6yx8m4yD5kKB"
+      ],
+      "specs": {
+        "text_limit_variants": [
+          {
+            "label": "Ad Fields",
+            "title": 65,
+            "description": 80
+          }
+        ],
+        "min_cards_by_size": {},
+        "image_dimensions": [],
+        "feature_image_dimensions": null,
+        "video_requirements": null,
+        "additional_requirements": [],
+        "optional_requirements": []
+      }
+    },
+    {
+      "format_id": {
+        "agent_url": "https://creative.adcontextprotocol.org",
+        "id": "adzymic-flip-043"
+      },
+      "name": "Flip",
+      "type": "display",
+      "is_responsive": false,
+      "dco_available": false,
+      "assets": [
+        {
+          "asset_id": "hero_image",
+          "asset_type": "image",
+          "asset_role": "hero_image",
+          "item_type": "group",
+          "required": true,
+          "requirements": {
+            "min": 1
+          }
+        },
+        {
+          "asset_id": "headline",
+          "asset_type": "text",
+          "asset_role": "headline",
+          "item_type": "individual",
+          "required": true,
+          "requirements": {
+            "max_length": 65
+          }
+        },
+        {
+          "asset_id": "body_text",
+          "asset_type": "text",
+          "asset_role": "body_text",
+          "item_type": "individual",
+          "required": false,
+          "requirements": {
+            "max_length": 80
+          }
+        }
+      ],
+      "renders": [
+        {
+          "role": "primary",
+          "dimensions": {
+            "width": 300,
+            "height": 250
+          }
+        },
+        {
+          "role": "companion",
+          "dimensions": {
+            "width": 300,
+            "height": 600
+          }
+        },
+        {
+          "role": "companion",
+          "dimensions": {
+            "width": 320,
+            "height": 480
+          }
+        }
+      ],
+      "preview_urls": [
+        "https://demo.enzymic.co/previews/5vEdDy5Q3zyO6Jq4"
+      ],
+      "specs": {
+        "text_limit_variants": [
+          {
+            "label": "Ad Fields",
+            "title": 65,
+            "description": 80
+          }
+        ],
+        "min_cards_by_size": {},
+        "image_dimensions": [],
+        "feature_image_dimensions": null,
+        "video_requirements": null,
+        "additional_requirements": [],
+        "optional_requirements": []
+      }
+    },
+    {
+      "format_id": {
+        "agent_url": "https://creative.adcontextprotocol.org",
+        "id": "adzymic-product-gallery-with-video-044"
+      },
+      "name": "Product Gallery with Video",
+      "type": "video",
+      "is_responsive": false,
+      "dco_available": false,
+      "assets": [
+        {
+          "asset_id": "hero_image",
+          "asset_type": "image",
+          "asset_role": "hero_image",
+          "item_type": "group",
+          "required": true,
+          "requirements": {
+            "min": 1
+          }
+        },
+        {
+          "asset_id": "hero_video",
+          "asset_type": "video",
+          "asset_role": "hero_video",
+          "item_type": "individual",
+          "required": true,
+          "requirements": null
+        },
+        {
+          "asset_id": "headline",
+          "asset_type": "text",
+          "asset_role": "headline",
+          "item_type": "individual",
+          "required": true,
+          "requirements": {
+            "max_length": 35
+          }
+        },
+        {
+          "asset_id": "body_text",
+          "asset_type": "text",
+          "asset_role": "body_text",
+          "item_type": "individual",
+          "required": false,
+          "requirements": {
+            "max_length": 30
+          }
+        }
+      ],
+      "renders": [
+        {
+          "role": "primary",
+          "dimensions": {
+            "width": 300,
+            "height": 600
+          }
+        },
+        {
+          "role": "companion",
+          "dimensions": {
+            "width": 320,
+            "height": 480
+          }
+        }
+      ],
+      "preview_urls": [
+        "https://app.enzymic.co/previews/eKlG09mWrMy8QrzY"
+      ],
+      "specs": {
+        "text_limit_variants": [
+          {
+            "label": "Ad Fields",
+            "title": 35,
+            "description": 30
+          }
+        ],
+        "min_cards_by_size": {},
+        "image_dimensions": [],
+        "feature_image_dimensions": null,
+        "video_requirements": null,
+        "additional_requirements": [],
+        "optional_requirements": []
+      }
+    },
+    {
+      "format_id": {
+        "agent_url": "https://creative.adcontextprotocol.org",
+        "id": "adzymic-360-view-045"
+      },
+      "name": "360 View",
+      "type": "display",
+      "is_responsive": false,
+      "dco_available": false,
+      "assets": [
+        {
+          "asset_id": "hero_image",
+          "asset_type": "image",
+          "asset_role": "hero_image",
+          "item_type": "group",
+          "required": true,
+          "requirements": {
+            "min": 1
+          }
+        }
+      ],
+      "renders": [
+        {
+          "role": "primary",
+          "dimensions": {
+            "width": 970,
+            "height": 250
+          }
+        },
+        {
+          "role": "companion",
+          "dimensions": {
+            "width": 300,
+            "height": 600
+          }
+        },
+        {
+          "role": "companion",
+          "dimensions": {
+            "width": 320,
+            "height": 480
+          }
+        }
+      ],
+      "preview_urls": [
+        "https://app.enzymic.co/previews/RYOeD9DKZVpA4abE"
+      ],
+      "specs": {
+        "text_limit_variants": [
+          {
+            "label": "Ad Fields"
+          }
+        ],
+        "min_cards_by_size": {},
+        "image_dimensions": [],
+        "feature_image_dimensions": null,
+        "video_requirements": null,
+        "additional_requirements": [],
+        "optional_requirements": []
+      }
+    },
+    {
+      "format_id": {
+        "agent_url": "https://creative.adcontextprotocol.org",
+        "id": "adzymic-mix-and-match-046"
+      },
+      "name": "Mix and Match",
+      "type": "display",
+      "is_responsive": false,
+      "dco_available": false,
+      "assets": [
+        {
+          "asset_id": "hero_image",
+          "asset_type": "image",
+          "asset_role": "hero_image",
+          "item_type": "individual",
+          "required": true,
+          "requirements": null
+        }
+      ],
+      "renders": [
+        {
+          "role": "primary",
+          "dimensions": {
+            "width": 300,
+            "height": 600
+          }
+        },
+        {
+          "role": "companion",
+          "dimensions": {
+            "width": 300,
+            "height": 250
+          }
+        },
+        {
+          "role": "companion",
+          "dimensions": {
+            "width": 320,
+            "height": 480
+          }
+        }
+      ],
+      "preview_urls": [
+        "https://demo.enzymic.co/previews/YE3P0pJe25ymZqe4",
+        "https://demo.enzymic.co/previews/7AWoqy0XD3yl4RBE"
+      ],
+      "specs": {
+        "text_limit_variants": [],
+        "min_cards_by_size": {},
+        "image_dimensions": [],
+        "feature_image_dimensions": null,
+        "video_requirements": null,
+        "additional_requirements": [],
+        "optional_requirements": []
+      }
+    },
+    {
+      "format_id": {
+        "agent_url": "https://creative.adcontextprotocol.org",
+        "id": "adzymic-gallery-slideshow-047"
+      },
+      "name": "Gallery Slideshow",
+      "type": "display",
+      "is_responsive": false,
+      "dco_available": false,
+      "assets": [
+        {
+          "asset_id": "hero_image",
+          "asset_type": "image",
+          "asset_role": "hero_image",
+          "item_type": "individual",
+          "required": true,
+          "requirements": null
+        },
+        {
+          "asset_id": "headline",
+          "asset_type": "text",
+          "asset_role": "headline",
+          "item_type": "individual",
+          "required": true,
+          "requirements": {
+            "max_length": 25
+          }
+        },
+        {
+          "asset_id": "body_text",
+          "asset_type": "text",
+          "asset_role": "body_text",
+          "item_type": "individual",
+          "required": false,
+          "requirements": {
+            "max_length": 19
+          }
+        }
+      ],
+      "renders": [
+        {
+          "role": "primary",
+          "dimensions": {
+            "width": 970,
+            "height": 250
+          }
+        },
+        {
+          "role": "companion",
+          "dimensions": {
+            "width": 300,
+            "height": 600
+          }
+        },
+        {
+          "role": "companion",
+          "dimensions": {
+            "width": 300,
+            "height": 250
+          }
+        },
+        {
+          "role": "companion",
+          "dimensions": {
+            "width": 320,
+            "height": 480
+          }
+        }
+      ],
+      "preview_urls": [
+        "https://app.enzymic.co/previews/e0kEdyYZD3pWJD73"
+      ],
+      "specs": {
+        "text_limit_variants": [
+          {
+            "label": "Ad Fields",
+            "title": 25,
+            "description": 19
+          }
+        ],
+        "min_cards_by_size": {},
+        "image_dimensions": [],
+        "feature_image_dimensions": null,
+        "video_requirements": null,
+        "additional_requirements": [],
+        "optional_requirements": []
+      }
+    },
+    {
+      "format_id": {
+        "agent_url": "https://creative.adcontextprotocol.org",
+        "id": "adzymic-single-image-scratch-048"
+      },
+      "name": "Single Image Scratch",
+      "type": "display",
+      "is_responsive": false,
+      "dco_available": false,
+      "assets": [
+        {
+          "asset_id": "hero_image",
+          "asset_type": "image",
+          "asset_role": "hero_image",
+          "item_type": "individual",
+          "required": true,
+          "requirements": null
+        }
+      ],
+      "renders": [
+        {
+          "role": "primary",
+          "dimensions": {
+            "width": 970,
+            "height": 250
+          }
+        },
+        {
+          "role": "companion",
+          "dimensions": {
+            "width": 300,
+            "height": 600
+          }
+        },
+        {
+          "role": "companion",
+          "dimensions": {
+            "width": 320,
+            "height": 480
+          }
+        }
+      ],
+      "preview_urls": [
+        "https://app.enzymic.co/previews/e0kEdyYZD3pWJD73",
+        "https://app.enzymic.co/previews/VPNQ8nKQaXp1lq7v"
+      ],
+      "specs": {
+        "text_limit_variants": [
+          {
+            "label": "Ad Fields"
+          }
+        ],
+        "min_cards_by_size": {},
+        "image_dimensions": [],
+        "feature_image_dimensions": null,
+        "video_requirements": null,
+        "additional_requirements": [],
+        "optional_requirements": []
+      }
+    }
+  ],
+  "generated_at": "2026-04-04T14:51:45.125225",
+  "source": "Adzymic Freshdesk — parsed from adzymic_raw.html",
+  "total_formats": 48
+}
