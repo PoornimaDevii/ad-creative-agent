@@ -716,6 +716,6 @@ if __name__ == "__main__":
     print(f"Starting AdCP Creative Agent MCP Server — {len(FORMATS)} formats loaded")
     print(f"Transport: {transport}, Port: {port}")
     if transport == "sse":
-        mcp.run(transport="sse", host="0.0.0.0", port=port)
+        mcp.run(transport="sse")
     else:
         mcp.run(transport="stdio")
