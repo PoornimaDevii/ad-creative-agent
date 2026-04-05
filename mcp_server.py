@@ -712,10 +712,10 @@ if __name__ == "__main__":
     import sys
     import os
     transport = sys.argv[1] if len(sys.argv) > 1 else "stdio"
-    port = int(os.getenv("PORT", 8000))
+    port = int(os.getenv("PORT", 8001))
     print(f"Starting AdCP Creative Agent MCP Server — {len(FORMATS)} formats loaded")
     print(f"Transport: {transport}, Port: {port}")
     if transport == "sse":
-        mcp.run(transport="sse")
+        mcp.run(transport="sse", host="0.0.0.0", port=port)
     else:
         mcp.run(transport="stdio")
