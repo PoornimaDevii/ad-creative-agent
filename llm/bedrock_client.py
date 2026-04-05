@@ -1,24 +1,48 @@
 """
 LLM client — uses Gemini 2.5 Flash Lite via LangChain ChatGoogleGenerativeAI with tool calling.
+
+Responsibilities:
+- Send user messages to Gemini with tool calling enabled
+- Route tool calls to MCP server via tool_handler
+- Log all MCP calls with tool name, context_id, and status to a file
+- Retry on transient failures (up to MAX_RETRIES per tool call)
+- Guard against infinite agentic loops with MAX_ITERATIONS
 """
 
 import json
 import logging
 import os
+import time
 from typing import Callable
 from uuid import uuid4
 
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_core.messages import HumanMessage, AIMessage, ToolMessage, SystemMessage
 
+# ====================== Logger Setup ======================
+# Write logs to a file so they are visible regardless of Streamlit stdout capture
+
+log_path = os.path.join(os.path.dirname(__file__), "..", "agent.log")
+
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s [%(levelname)s] %(name)s — %(message)s",
+    handlers=[
+        logging.FileHandler(log_path, encoding="utf-8"),
+        logging.StreamHandler(),
+    ],
+    force=True,
 )
 logger = logging.getLogger("gemini_client")
 
+# ====================== Constants ======================
+
 MODEL_ID = "gemini-2.5-flash-lite"
-MAX_ITERATIONS = 5
+MAX_ITERATIONS = 5   # max agentic loop iterations before giving up
+MAX_RETRIES = 3      # max retries per tool call on transient failure
+RETRY_DELAY = 1.0    # seconds between retries
+
+# ====================== Tool Schemas ======================
 
 TOOLS_SCHEMA = [
     {
@@ -86,6 +110,8 @@ TOOLS_SCHEMA = [
     },
 ]
 
+# ====================== System Prompt ======================
+
 SYSTEM_PROMPT = """You are an AdCP Creative Agent assistant for the Adzymic platform.
 You help users discover creative ad formats and generate previews.
 
@@ -93,29 +119,81 @@ You have access to two tools:
 - list_creative_formats: to search and filter the 48 available Adzymic ad formats
 - preview_creative: to generate preview URLs for a specific format
 
-Rules for using list_creative_formats:
-- When user asks about any format by name, ALWAYS call list_creative_formats first
-- Use name_search with a single keyword only e.g. 'carousel', 'video', 'lead', 'facebook', 'chatbot', 'countdown'
-- Never combine multiple types as comma-separated string
-- Call list_creative_formats ONLY ONCE per query
+TOOL CALLING RULES:
+1. For ANY question about formats, call list_creative_formats ONCE with appropriate filters
+2. If user asks to preview a specific format, call list_creative_formats ONCE then preview_creative ONCE
+3. After receiving tool results, STOP calling tools and write your response immediately
+4. NEVER call the same tool twice in one conversation turn
+5. NEVER call list_creative_formats more than once per user message
 
-Rules for using preview_creative:
-- When user asks to preview or see a SPECIFIC format, ALWAYS:
-  1. Call list_creative_formats to find it
-  2. IMMEDIATELY call preview_creative with the format_id from the result
-- NEVER stop after list_creative_formats when user asked to preview a specific format
-- NEVER say the preview URL is not available
+FOR LIST REQUESTS (e.g. "show carousel formats", "list video formats"):
+- Call list_creative_formats with name_search using a single keyword
+- Then respond with a brief summary of what was found
 
-Response rules:
-- Always respond in plain English
-- Never expose tool names, JSON, or parameters in your response
-- Never include preview URLs or links in your text response — the UI renders previews automatically
-- When a preview is requested, write a SHORT description using ONLY facts from the tool result:
-  - Format name, available sizes (from renders only), required assets with exact character limits, optional assets, DCO availability
-  - Do NOT add any information not present in the tool result
-- End your description with: "Here is the preview:"
+FOR PREVIEW REQUESTS (e.g. "preview product carousel", "show me the lead gen ad"):
+- Call list_creative_formats to find the format
+- Call preview_creative with the format_id from the result
+- Then write a SHORT factual description using ONLY data from the tool result:
+  * Format name
+  * Available sizes (from renders field only)
+  * Required assets with exact character limits
+  * Optional assets
+  * DCO availability
+- End with: "Here is the preview:"
+
+RESPONSE RULES:
+- Always respond in plain English after receiving tool results
+- NEVER include preview URLs in your text — the UI renders them automatically
+- NEVER expose tool names or JSON to the user
+- ONLY use facts present in the tool result — never infer or add details
 - Keep responses concise"""
 
+
+# ====================== Tool Call with Retry ======================
+
+async def _call_tool_with_retry(
+    tool_handler: Callable,
+    tool_name: str,
+    tool_input: dict,
+    context_id: str,
+) -> dict:
+    """
+    Call a tool via tool_handler with retry logic.
+
+    Logs each attempt with tool name, context_id, and status.
+    Retries up to MAX_RETRIES times on transient failures with exponential backoff.
+    Returns an error dict if all retries are exhausted.
+    """
+    last_error = None
+
+    for attempt in range(1, MAX_RETRIES + 1):
+        logger.info(f"[MCP_CALL] context_id={context_id} tool={tool_name} attempt={attempt}/{MAX_RETRIES} input_keys={list(tool_input.keys())}")
+        try:
+            result = await tool_handler(tool_name, tool_input)
+
+            # Check for error status in result — treat as non-completed
+            if isinstance(result, dict) and result.get("status") in ("failed", "error"):
+                logger.warning(f"[MCP_ERROR_STATUS] context_id={context_id} tool={tool_name} attempt={attempt} status={result.get('status')} error={result.get('error')}")
+                last_error = result.get("error", "Unknown error")
+                if attempt < MAX_RETRIES:
+                    time.sleep(RETRY_DELAY * attempt)
+                continue
+
+            logger.info(f"[MCP_OK] context_id={context_id} tool={tool_name} attempt={attempt} result_keys={list(result.keys()) if isinstance(result, dict) else type(result).__name__}")
+            return result
+
+        except Exception as e:
+            last_error = str(e)
+            logger.warning(f"[MCP_RETRY] context_id={context_id} tool={tool_name} attempt={attempt} error={type(e).__name__}: {e}")
+            if attempt < MAX_RETRIES:
+                time.sleep(RETRY_DELAY * attempt)
+
+    # All retries exhausted
+    logger.error(f"[MCP_FAILED] context_id={context_id} tool={tool_name} after {MAX_RETRIES} attempts. last_error={last_error}")
+    return {"error": last_error, "status": "failed"}
+
+
+# ====================== Main LLM Invocation ======================
 
 async def invoke_with_tools(
     user_message: str,
@@ -123,31 +201,49 @@ async def invoke_with_tools(
     conversation_history: list = None,
     context_id: str = None,
 ) -> dict:
-    import traceback
-    context_id = context_id or str(uuid4())[:8]
-    print(f"[INVOKE] context_id={context_id} message={user_message[:80]}", flush=True)
+    """
+    Send a user message to Gemini with tool calling enabled.
 
+    Runs an agentic loop:
+    1. Send message to Gemini
+    2. If model calls a tool → execute via _call_tool_with_retry → feed result back
+    3. Repeat until model returns a final text response or MAX_ITERATIONS reached
+
+    Args:
+        user_message: Natural language query from the user
+        tool_handler: Async callable(tool_name, tool_input) -> dict
+        conversation_history: Prior turns in simple {role, content} format
+        context_id: Optional trace ID (auto-generated if not provided)
+
+    Returns:
+        Dict with keys: response, tool_calls, tool_results, messages, context_id
+    """
+    context_id = context_id or str(uuid4())[:8]
+    logger.info(f"[INVOKE_START] context_id={context_id} message_len={len(user_message)}")
+
+    # Initialize Gemini LLM with tool schemas bound
     try:
         llm = ChatGoogleGenerativeAI(
             model=MODEL_ID,
             google_api_key=os.getenv("GEMINI_API_KEY"),
+            thinking_budget=512,
         ).bind_tools(TOOLS_SCHEMA)
-        print(f"[GEMINI] LLM initialized model={MODEL_ID}", flush=True)
+        logger.info(f"[LLM_INIT_OK] context_id={context_id} model={MODEL_ID}")
     except Exception as e:
-        print(f"[GEMINI_INIT_ERROR] {type(e).__name__}: {e}", flush=True)
-        traceback.print_exc()
-        return {"response": "I encountered an error processing your request. Please try again.", "tool_calls": [], "tool_results": [], "messages": conversation_history or [], "context_id": context_id}
+        logger.error(f"[LLM_INIT_ERROR] context_id={context_id} error={type(e).__name__}: {e}", exc_info=True)
+        return {
+            "response": "I encountered an error initialising the AI model. Please try again.",
+            "tool_calls": [], "tool_results": [], "messages": conversation_history or [],
+            "context_id": context_id,
+        }
 
-    # Build message list
+    # Build message list starting with system prompt
     messages = [SystemMessage(content=SYSTEM_PROMPT)]
 
-    # Convert conversation history
+    # Convert stored conversation history into LangChain message objects
     for msg in (conversation_history or []):
         role = msg.get("role")
-        text = ""
-        for block in msg.get("content", []):
-            if "text" in block:
-                text += block["text"]
+        text = "".join(block.get("text", "") for block in msg.get("content", []))
         if not text:
             continue
         if role == "user":
@@ -155,64 +251,103 @@ async def invoke_with_tools(
         elif role == "assistant":
             messages.append(AIMessage(content=text))
 
+    # Append the current user message
     messages.append(HumanMessage(content=user_message))
 
     tool_calls = []
     tool_results = []
     final_response = ""
     iteration = 0
+    tools_called = set()  # track which tools have been called to prevent loops
 
     while iteration < MAX_ITERATIONS:
         iteration += 1
         logger.info(f"[LLM_CALL] context_id={context_id} iteration={iteration}/{MAX_ITERATIONS}")
-        print(f"[LLM_CALL] context_id={context_id} iteration={iteration}/{MAX_ITERATIONS}", flush=True)
 
         try:
             response = await llm.ainvoke(messages)
-            logger.info(f"[LLM_RESPONSE] context_id={context_id} type={type(response).__name__} tool_calls={len(response.tool_calls) if hasattr(response, 'tool_calls') else 'N/A'} content_len={len(response.content) if hasattr(response, 'content') else 'N/A'}")
-            print(f"[LLM_RESPONSE] tool_calls={response.tool_calls} content={response.content[:100] if hasattr(response, 'content') and response.content else 'empty'}", flush=True)
+            logger.info(f"[LLM_RESPONSE] context_id={context_id} iteration={iteration} has_tool_calls={bool(response.tool_calls)} content_len={len(response.content or '')}")
         except Exception as e:
             logger.error(f"[LLM_ERROR] context_id={context_id} iteration={iteration} error={type(e).__name__}: {e}", exc_info=True)
-            print(f"[LLM_ERROR] {type(e).__name__}: {e}", flush=True)
-            import traceback; traceback.print_exc()
             final_response = "I encountered an error processing your request. Please try again."
             break
 
+        # Append model response to message history for next iteration
         messages.append(response)
 
         if response.tool_calls:
-            for tc in response.tool_calls:
+            # Filter out duplicate tool calls to prevent loops
+            new_tool_calls = [
+                tc for tc in response.tool_calls
+                if tc["name"] not in tools_called
+            ]
+
+            if not new_tool_calls:
+                # All tools already called — force model to respond
+                logger.warning(f"[LOOP_DETECTED] context_id={context_id} — all tools already called, forcing response")
+                messages.append(HumanMessage(content="You have already retrieved the data. Now write your final response to the user based on the tool results above. Do not call any more tools."))
+                continue
+
+            # Execute each new tool call
+            for tc in new_tool_calls:
                 tool_name = tc["name"]
                 tool_input = tc["args"]
                 tool_id = tc["id"]
 
-                logger.info(f"[TOOL_CALL] context_id={context_id} tool={tool_name} input={tool_input}")
+                tools_called.add(tool_name)
                 tool_calls.append({"name": tool_name, "input": tool_input})
 
-                try:
-                    result = await tool_handler(tool_name, tool_input)
-                    logger.info(f"[TOOL_OK] context_id={context_id} tool={tool_name} result_keys={list(result.keys()) if isinstance(result, dict) else type(result)}")
-                except Exception as e:
-                    logger.error(f"[TOOL_EXCEPTION] context_id={context_id} tool={tool_name} error={type(e).__name__}: {e}", exc_info=True)
-                    result = {"error": str(e), "status": "failed"}
-
+                result = await _call_tool_with_retry(tool_handler, tool_name, tool_input, context_id)
                 tool_results.append({"name": tool_name, "result": result})
+
                 messages.append(ToolMessage(
                     content=json.dumps(result),
                     tool_call_id=tool_id,
                 ))
         else:
-            final_response = response.content or ""
-            logger.info(f"[LLM_DONE] context_id={context_id} response_len={len(final_response)} tool_calls_total={len(tool_calls)}")
+            # No tool calls — extract final text response
+            content = response.content
+            if isinstance(content, list):
+                final_response = " ".join(
+                    block.get("text", "") if isinstance(block, dict) else str(block)
+                    for block in content
+                )
+            else:
+                final_response = content or ""
+            logger.info(f"[LLM_DONE] context_id={context_id} response_len={len(final_response)} total_tool_calls={len(tool_calls)}")
             break
 
+    # Guard: if loop exhausted without a response
     if iteration >= MAX_ITERATIONS and not final_response:
-        final_response = "I was unable to complete your request. Please try a simpler query."
+        logger.error(f"[MAX_ITERATIONS] context_id={context_id} — loop exceeded {MAX_ITERATIONS} iterations")
+        # If we have tool results, generate a fallback response instead of an error
+        if tool_results:
+            final_response = "Here are the results based on your request."
+        else:
+            final_response = "I was unable to complete your request. Please try a simpler query."
 
-    # Store history in simple format for session state
+    # Auto-preview fallback: if list_creative_formats was called but preview_creative wasn't,
+    # call preview_creative for the first format in the result
+    list_tr = next((tr for tr in tool_results if tr["name"] == "list_creative_formats"), None)
+    preview_tr = next((tr for tr in tool_results if tr["name"] == "preview_creative"), None)
+    if list_tr and not preview_tr:
+        formats = list_tr["result"].get("formats", [])
+        if formats:
+            fmt_id = formats[0].get("format_id", {})
+            logger.info(f"[AUTO_PREVIEW] list called but preview missing, calling preview_creative for {fmt_id}")
+            try:
+                preview_result = await tool_handler("preview_creative", {"format_id": fmt_id, "assets": {}})
+                tool_results.append({"name": "preview_creative", "result": preview_result})
+                logger.info(f"[AUTO_PREVIEW_OK] preview_creative called successfully")
+            except Exception as e:
+                logger.error(f"[AUTO_PREVIEW_ERROR] {e}")
+
+    # Store updated history in simple format for Streamlit session state
     updated_history = list(conversation_history or [])
     updated_history.append({"role": "user", "content": [{"text": user_message}]})
     updated_history.append({"role": "assistant", "content": [{"text": final_response}]})
+
+    logger.info(f"[INVOKE_END] context_id={context_id} response_len={len(final_response)} tool_calls={len(tool_calls)}")
 
     return {
         "response": final_response.strip(),

@@ -189,15 +189,10 @@ def render_format_card(fmt: dict):
         if optional:
             st.caption("➕ Optional: " + ", ".join(optional))
 
-        if st.button("👁 Preview", key=f"preview_{fmt_id.get('id')}"):
-            st.session_state[f"show_preview_{fmt_id.get('id')}"] = not st.session_state.get(f"show_preview_{fmt_id.get('id')}", False)
-
-        if st.session_state.get(f"show_preview_{fmt_id.get('id')}"):
-            if preview_urls:
+        if preview_urls:
+            with st.expander("👁 Preview", expanded=False):
                 for url in preview_urls:
                     _render_preview_inline(url)
-            else:
-                st.warning("No preview available for this format.")
 
 
 
@@ -230,6 +225,7 @@ def render_chat_interface():
                         st.code(f"{tc['name']}\n{tc['input']}", language="json")
             if msg.get("preview_urls"):
                 st.divider()
+                st.caption(f"👁 {len(msg['preview_urls'])} preview(s)")
                 urls = msg["preview_urls"]
                 if len(urls) > 1:
                     tabs = st.tabs([p["name"] for p in urls])

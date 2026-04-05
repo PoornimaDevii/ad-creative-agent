@@ -452,8 +452,16 @@ async def list_creative_formats(
     if is_responsive is not None:
         formats = [f for f in formats if f.is_responsive == is_responsive]
     if name_search:
+        import html
         needle = name_search.lower()
-        formats = [f for f in formats if needle in f.name.lower()]
+        # Normalize both the search term and format names for better matching
+        needle_normalized = needle.replace(" and ", " & ").replace("and", "&")
+        formats = [
+            f for f in formats 
+            if needle in html.unescape(f.name).lower() 
+            or needle_normalized in html.unescape(f.name).lower()
+            or needle.replace("&", "and") in html.unescape(f.name).lower().replace("&", "and")
+        ]
     if wcag_level:
         formats = _filter_by_wcag(formats, wcag_level)
     if disclosure_positions:

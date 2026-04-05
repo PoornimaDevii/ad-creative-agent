@@ -1,0 +1,16 @@
+# Core dependencies
+streamlit>=1.32.0
+python-dotenv>=1.0.0
+requests>=2.31.0
+pydantic>=2.6.0
+
+# LLM and AI
+langchain-google-genai>=1.0.0
+langchain-core>=0.1.0
+
+# MCP (Model Context Protocol)
+mcp>=0.9.0
+
+# Async support
+asyncio>=3.4.3
+

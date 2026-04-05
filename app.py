@@ -4,8 +4,11 @@ Connects: Streamlit UI + AWS Bedrock (Claude Haiku) + MCP Server (SSE)
 """
 
 import asyncio
+import logging
 import os
 from uuid import uuid4
+
+logger = logging.getLogger("app")
 import streamlit as st
 from dotenv import load_dotenv
 
@@ -109,14 +112,21 @@ def main():
             preview_urls = []
             for tr in tool_results:
                 if tr["name"] == "preview_creative":
-                    for preview in tr["result"].get("previews", []):
-                        for render in preview.get("renders", []):
-                            url = render.get("preview_url")
-                            if url:
-                                preview_urls.append({
-                                    "url": url,
-                                    "name": preview.get("input", {}).get("name", "Preview"),
-                                })
+                    result_data = tr["result"]
+                    logger.info(f"[PREVIEW_EXTRACT] result_data keys={list(result_data.keys()) if isinstance(result_data, dict) else type(result_data)}")
+                    
+                    previews = result_data.get("previews", [])
+                    if previews:
+                        for preview in previews:
+                            renders = preview.get("renders", [])
+                            for render in renders:
+                                url = render.get("preview_url")
+                                if url:
+                                    preview_urls.append({
+                                        "url": url,
+                                        "name": preview.get("input", {}).get("name", "Preview"),
+                                    })
+            logger.info(f"[PREVIEW_URLS] extracted={len(preview_urls)} URLs")
 
             st.session_state.messages.append({
                 "role": "assistant",
@@ -148,8 +158,6 @@ def main():
                             _render_preview_inline(p["url"])
                 else:
                     _render_preview_inline(preview_urls[0]["url"])
-
-        st.rerun()
 
 
 if __name__ == "__main__":
