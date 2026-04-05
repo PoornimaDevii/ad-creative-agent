@@ -28,7 +28,7 @@ from mcp_client_module.mcp_client import list_creative_formats, preview_creative
 load_dotenv()
 
 logger = logging.getLogger("app")
-MCP_SERVER_URL = os.getenv("MCP_SERVER_URL", "http://localhost:8000/sse")
+MCP_SERVER_URL = os.getenv("MCP_SERVER_URL", "http://localhost:8080/mcp")
 PREVIEW_TRIGGERS = {"preview", "show", "see", "yes", "show me", "show a preview", "preview it", "yes continue", "continue", "go ahead", "sure", "ok", "okay", "do it"}
 
 
@@ -61,7 +61,7 @@ async def tool_handler(tool_name: str, tool_input: dict) -> dict:
         )
         logger.info(f"[TOOL_HANDLER] preview result keys={list(result.keys()) if isinstance(result, dict) else result}")
         return result
-    return {"error": f"Unknown tool: {tool_name}"}
+    return {"error": "Unsupported operation.", "status": "failed"}
 
 
 # ====================== Server Health Check ======================
@@ -79,7 +79,7 @@ async def check_server() -> bool:
 def main():
     # Validate required env vars early
     if not os.getenv("GEMINI_API_KEY"):
-        st.error("GEMINI_API_KEY is not set. Please add it to your .env file.")
+        st.error("Configuration error: missing API key. Please contact support.")
         st.stop()
 
     render_page_config()
@@ -89,8 +89,8 @@ def main():
 
     if not connected:
         render_error(
-            f"Cannot connect to MCP server at {MCP_SERVER_URL}. "
-            "Make sure mcp_server.py is running with SSE transport."
+            "Cannot connect to the creative formats server. "
+            "Please try again later or contact support."
         )
         st.stop()
 
@@ -127,10 +127,13 @@ def main():
                         context_id=context_id,
                     ))
                 except Exception as e:
-                    logger.error(f"[APP ERROR] {type(e).__name__}: {e}")
-                    traceback.print_exc()
-                    st.error(f"{type(e).__name__}: {e}")
-                    st.stop()
+                    logger.error(f"[APP ERROR] {type(e).__name__}: {e}\n{traceback.format_exc()}")
+                    result = {
+                        "response": "Something went wrong. Please try again.",
+                        "tool_calls": [],
+                        "tool_results": [],
+                        "messages": st.session_state.get("conversation_history", []),
+                    }
 
             response = result["response"]
             tool_calls = result["tool_calls"]

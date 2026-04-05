@@ -48,15 +48,17 @@ SYSTEM_PROMPT = """You are an AdCP Creative Agent assistant for the Adzymic plat
 You help users discover creative ad formats and generate previews.
 
 You have access to two tools:
-- list_creative_formats: search and filter the 48 available Adzymic ad formats
-- preview_creative: generate preview URLs for a specific format
+- list_creative_formats: search and filter the 48 available Adzymic ad formats, fetch it's specifications
+- preview_creative: fetch preview URL for a specific format/creative and display it to the user
 
 REASONING APPROACH (ReAct):
 Think step by step before acting:
-1. Read ONLY the latest user message to understand what is being asked RIGHT NOW.
-2. If it is a follow-up preview request ("show a preview", "preview it", "yes", "show me") and a format was already discussed in history, extract the format_id from history and call preview_creative directly WITHOUT calling list_creative_formats.
-3. If it is a new format question, call list_creative_formats with a single keyword.
-4. Never mix words from different messages when forming tool arguments.
+1. Read the latest user message to understand what is being asked RIGHT NOW.
+2. CRITICAL : If the latest message contains an explicit format name (e.g. "shake and reveal", "carousel", "countdown"), ALWAYS search for THAT format — ignore conversation history.
+3. If the format name is not present in the latest message, get the format name referring to the history, if present.
+4. If the format name can't be got, confirm with the user.
+5. If it is a follow-up with NO format name ("show a preview", "preview it", "yes", "show me"), extract the format_id from history and call preview_creative directly.
+6. Never mix words from different messages when forming tool arguments.
 
 TOOL RULES:
 - name_search must be ONE single keyword from the format name only
@@ -72,10 +74,16 @@ TOOL RULES:
 - NEVER guess or construct a format_id — always copy it verbatim from the tool result (e.g. id='adzymic-carousel-standard-001', not 'carousel_standard')
 
 PREVIEW DETECTION:
-- If the user message contains "preview", treat it as a preview request
-- For "preview X": call list_creative_formats with name_search=X first, then immediately call preview_creative with the first result's format_id
-- After calling preview_creative, respond with ONE sentence only: "Here is the preview of [format name]:"
+- If the user message contains "preview", treat it as a preview request.
+- Also check for keywords like "display", "show me", "glimpse" etc that mean a preview.
+- For "preview X": you MUST call BOTH tools in sequence:
+  STEP 1 — call list_creative_formats with name_search=X
+  STEP 2 — immediately call preview_creative with the format_id from STEP 1's first result
+  Do NOT stop after STEP 1. Both calls are required.
+- After preview_creative returns, respond with ONE sentence only: "Here is the preview of [format name]:"
+  where [format name] is the EXACT name from the list_creative_formats result — never invent it
 - NEVER write a description when the user asked for a preview
+- NEVER say "Here is the preview of X:" unless preview_creative was actually called
 
 RESPONSE STRUCTURE:
 For INFO/LIST requests:
@@ -92,6 +100,7 @@ For PREVIEW requests:
 
 RULES:
 - NEVER say "Here is the preview:" unless preview_creative was called
+- NEVER use a format name in your response that doesn't come from a tool result
 - NEVER include preview URLs in your text
 - NEVER expose tool names or JSON
 - ONLY use facts from tool results
@@ -171,24 +180,45 @@ def make_tools(tool_handler: Callable) -> list:
 
 
 async def _call_with_retry(tool_handler: Callable, tool_name: str, args: dict) -> dict:
+    """
+    Invoke a tool via tool_handler with retry logic and structured logging.
+
+    Logs every attempt as [TOOL_CALL] with tool name and attempt number.
+    Handles non-completed statuses:
+      - status=failed/error → retries up to MAX_RETRIES with async backoff
+      - Exception           → retries up to MAX_RETRIES with async backoff
+      - All retries done    → logs [TOOL_FAILED], returns error dict
+
+    Args:
+        tool_handler: Async callable injected from app.py that routes to MCP client
+        tool_name:    Name of the tool to call
+        args:         Tool arguments dict
+
+    Returns:
+        Tool result dict, or {"error": ..., "status": "failed"} on exhaustion.
+    """
     last_error = None
     for attempt in range(1, MAX_RETRIES + 1):
+        # Log every attempt for full traceability
         logger.info(f"[TOOL_CALL] tool={tool_name} attempt={attempt}/{MAX_RETRIES}")
         try:
             result = await tool_handler(tool_name, args)
+            # Non-completed status — retry rather than returning bad data
             if isinstance(result, dict) and result.get("status") in ("failed", "error"):
                 last_error = result.get("error", "Unknown error")
+                logger.warning(f"[TOOL_NON_COMPLETED] tool={tool_name} attempt={attempt} status={result.get('status')} error={last_error}")
                 if attempt < MAX_RETRIES:
-                    await asyncio.sleep(RETRY_DELAY * attempt)
+                    await asyncio.sleep(RETRY_DELAY * attempt)  # async backoff
                 continue
-            logger.info(f"[TOOL_OK] tool={tool_name}")
+            logger.info(f"[TOOL_OK] tool={tool_name} status=completed")
             return result
         except Exception as e:
             last_error = str(e)
-            logger.warning(f"[TOOL_RETRY] tool={tool_name} attempt={attempt} error={e}")
+            logger.warning(f"[TOOL_RETRY] tool={tool_name} attempt={attempt} status=transient-error error={e}")
             if attempt < MAX_RETRIES:
-                await asyncio.sleep(RETRY_DELAY * attempt)
-    logger.error(f"[TOOL_FAILED] tool={tool_name} last_error={last_error}")
+                await asyncio.sleep(RETRY_DELAY * attempt)  # async backoff
+    # All retries exhausted
+    logger.error(f"[TOOL_FAILED] tool={tool_name} status=failed after {MAX_RETRIES} attempts last_error={last_error}")
     return {"error": last_error, "status": "failed"}
 
 
@@ -220,7 +250,7 @@ async def invoke_react_agent(
         llm = ChatGoogleGenerativeAI(
             model=MODEL_ID,
             google_api_key=os.getenv("GEMINI_API_KEY"),
-            temperature=0.2,
+            temperature=0,
             thinking_budget=512,
         )
     except Exception as e:
@@ -234,12 +264,13 @@ async def invoke_react_agent(
     tools = make_tools(tool_handler)
     agent = create_react_agent(llm, tools, prompt=SYSTEM_PROMPT)
 
-    # Build message history — keep last 3 turns (6 messages) for context
+    # Build message history — keep last 2 turns (4 messages) for context
     messages = []
     history = conversation_history or []
-    recent_history = history[-6:] if len(history) > 6 else history
+    recent_history = history[-4:] if len(history) > 4 else history
     for msg in recent_history:
         role = msg.get("role")
+        # Flatten content blocks into plain text for LangChain message objects
         text = "".join(block.get("text", "") for block in msg.get("content", []))
         if not text:
             continue
@@ -248,6 +279,7 @@ async def invoke_react_agent(
         elif role == "assistant":
             messages.append(AIMessage(content=text))
 
+    # Append the current user message (may be enriched with format_id context)
     messages.append(HumanMessage(content=user_message))
 
     # Run agent with timeout
@@ -271,7 +303,8 @@ async def invoke_react_agent(
             "context_id": context_id,
         }
 
-    # Extract final response and tool calls from agent messages
+    # Extract final response and tool calls from the agent's message sequence.
+    # LangGraph returns all messages including intermediate tool calls and results.
     agent_messages = result.get("messages", [])
     final_response = ""
     tool_calls = []
@@ -279,10 +312,13 @@ async def invoke_react_agent(
 
     for msg in agent_messages:
         if isinstance(msg, AIMessage):
+            # Collect tool calls the agent decided to make
             for tc in (msg.tool_calls or []):
                 tool_calls.append({"name": tc["name"], "input": tc["args"]})
+            # The last non-empty AIMessage text is the final user-facing response
             content = msg.content
             if isinstance(content, list):
+                # Gemini may return content as a list of blocks
                 text = " ".join(
                     b.get("text", "") if isinstance(b, dict) else str(b)
                     for b in content
@@ -293,10 +329,12 @@ async def invoke_react_agent(
                 final_response = text.strip()
 
         elif isinstance(msg, ToolMessage):
+            # Parse tool result JSON; fall back to raw string if not valid JSON
             try:
                 result_data = json.loads(msg.content)
             except Exception:
                 result_data = {"raw": msg.content}
+            # LangGraph may not set msg.name — resolve via tool_call_id matching
             tool_name = getattr(msg, "name", None) or ""
             if not tool_name:
                 for tc_msg in agent_messages:

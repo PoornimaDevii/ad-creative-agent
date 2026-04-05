@@ -7,20 +7,12 @@ An MCP (Model Context Protocol) server that provides access to 48 Adzymic creati
 - **48 Creative Formats**: Access to carousel, video, gallery, social, and interactive ad formats
 - **Format Discovery**: Search and filter formats by name, type, dimensions, and asset requirements
 - **Preview Generation**: Generate real Adzymic preview URLs for creative formats
-- **AdCP Compliant**: Fully implements AdCP list_creative_formats and preview_creative tools
+- **AdCP Compliant**: Fully implements AdCP `list_creative_formats` and `preview_creative` tools
 - **Multiple Transports**: Supports both stdio and SSE (HTTP) transports
 
 ## Installation
 
-### Via pip (when published)
 ```bash
-pip install adcp-creative-agent-mcp
-```
-
-### From source
-```bash
-git clone https://github.com/yourusername/creative-management-agent.git
-cd creative-management-agent/creative_agent
 pip install -r requirements.txt
 ```
 
@@ -34,7 +26,8 @@ python mcp_server.py stdio
 ### As HTTP Server (SSE)
 ```bash
 python mcp_server.py sse
-# Server runs on http://localhost:8000/sse
+# Server runs on http://localhost:8000/sse by default
+# Override port via PORT env var: PORT=9000 python mcp_server.py sse
 ```
 
 ### With Claude Desktop
@@ -46,7 +39,7 @@ Add to your Claude Desktop config (`~/Library/Application Support/Claude/claude_
   "mcpServers": {
     "adcp-creative": {
       "command": "python",
-      "args": ["/path/to/creative_agent/mcp_server.py", "stdio"]
+      "args": ["/path/to/mcp_server.py", "stdio"]
     }
   }
 }
@@ -56,17 +49,17 @@ Add to your Claude Desktop config (`~/Library/Application Support/Claude/claude_
 
 ```python
 from mcp import ClientSession
-from mcp.client.stdio import stdio_client
+from mcp.client.sse import sse_client
 
-async with stdio_client("python", ["mcp_server.py", "stdio"]) as (read, write):
+async with sse_client("http://localhost:8000/sse") as (read, write):
     async with ClientSession(read, write) as session:
         await session.initialize()
-        
+
         # List formats
         result = await session.call_tool("list_creative_formats", {
             "name_search": "carousel"
         })
-        
+
         # Preview format
         preview = await session.call_tool("preview_creative", {
             "request_type": "single",
@@ -86,30 +79,31 @@ async with stdio_client("python", ["mcp_server.py", "stdio"]) as (read, write):
 Discover and filter creative formats.
 
 **Parameters:**
-- `name_search` (string): Search by format name
-- `type` (string): Filter by type (display, video, audio, dooh)
-- `asset_types` (array): Filter by asset types (image, video, text, etc.)
-- `max_width`, `max_height`, `min_width`, `min_height` (int): Filter by dimensions
-- `is_responsive` (boolean): Filter responsive formats
-- `pagination` (object): Pagination with max_results and cursor
+- `name_search` (string): Search by a single keyword from the format name e.g. `carousel`, `shake`, `facebook`
+- `type` (string): Filter by type — only use when the user explicitly says one of: `display`, `video`, `audio`, `dooh`
+- `asset_types` (array): Filter by asset types (`image`, `video`, `audio`, `text`, `html`, `javascript`, `url`)
+- `max_width`, `max_height`, `min_width`, `min_height` (int): Filter by render dimensions in pixels
+- `is_responsive` (boolean): Filter responsive formats only
+- `dco_available` (boolean): Filter formats that support Dynamic Creative Optimization
+- `pagination` (object): `{ "max_results": 1–100, "cursor": "..." }`
 
-**Returns:** Array of format objects with full specifications
+**Returns:** Object with `formats` array (full AdCP specs) and optional `next_cursor`
 
 ### preview_creative
 Generate preview renderings of creative formats.
 
 **Parameters:**
-- `request_type` (string): "single", "batch", or "variant"
-- `creative_manifest` (object): Format ID and assets
-- `output_format` (string): "url" or "html"
-- `inputs` (array): Optional input variants
+- `request_type` (string): `"single"`, `"batch"`, or `"variant"`
+- `creative_manifest` (object): Contains `format_id` (`agent_url` + `id`) and `assets` dict
+- `output_format` (string): `"url"` (default) or `"html"`
+- `inputs` (array): Optional list of input variants for multi-variant previews
 
-**Returns:** Preview URLs and metadata
+**Returns:** Object with `previews` array containing render URLs and metadata
 
 ## Resources
 
 ### formats://all
-Full catalog of all 48 formats with complete specifications.
+Full catalog of all 48 formats with complete AdCP specifications.
 
 ### formats://summary
 Lightweight list of format names and IDs for quick lookup.
@@ -127,46 +121,34 @@ Lightweight list of format names and IDs for quick lookup.
 ## Examples
 
 ### Search for carousel formats
-```bash
-# Using MCP CLI
-mcp call list_creative_formats '{"name_search": "carousel"}'
+```python
+result = await session.call_tool("list_creative_formats", {
+    "name_search": "carousel"
+})
 ```
 
 ### Get format preview
-```bash
-mcp call preview_creative '{
-  "request_type": "single",
-  "creative_manifest": {
-    "format_id": {
-      "agent_url": "https://creative.adcontextprotocol.org",
-      "id": "adzymic-carousel-standard-001"
-    },
-    "assets": {}
-  }
-}'
+```python
+preview = await session.call_tool("preview_creative", {
+    "request_type": "single",
+    "creative_manifest": {
+        "format_id": {
+            "agent_url": "https://creative.adcontextprotocol.org",
+            "id": "adzymic-carousel-standard-001"
+        },
+        "assets": {}
+    }
+})
 ```
 
 ## API Reference
 
 Full AdCP specification: https://adcontextprotocol.org
 
-## License
-
-MIT License
-
-## Contributing
-
-Contributions welcome! Please open an issue or PR.
-
-## Support
-
-- GitHub Issues: https://github.com/yourusername/creative-management-agent/issues
-- Documentation: https://github.com/yourusername/creative-management-agent/wiki
-
 ## Credits
 
 Built with:
-- [MCP](https://modelcontextprotocol.io) - Model Context Protocol
-- [FastMCP](https://github.com/jlowin/fastmcp) - Fast MCP server framework
-- [Adzymic](https://adzymic.com) - Creative format provider
-- [AdCP](https://adcontextprotocol.org) - Ad Context Protocol specification
+- [MCP](https://modelcontextprotocol.io) — Model Context Protocol
+- [FastMCP](https://github.com/jlowin/fastmcp) — Fast MCP server framework
+- [Adzymic](https://adzymic.com) — Creative format provider
+- [AdCP](https://adcontextprotocol.org) — Ad Context Protocol specification

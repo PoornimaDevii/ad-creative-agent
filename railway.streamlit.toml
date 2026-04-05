@@ -6,8 +6,6 @@ startCommand = "streamlit run app.py --server.port=$PORT --server.address=0.0.0.
 restartPolicyType = "on_failure"
 restartPolicyMaxRetries = 3
 
-[environments.production.variables]
-PORT = "8501"
-# Set this to the public URL of your deployed MCP server service on Railway
-# e.g. MCP_SERVER_URL = "https://your-mcp-service.up.railway.app/sse"
-MCP_SERVER_URL = ""
+# Set these in the Railway dashboard under service variables:
+# GEMINI_API_KEY = "..."
+# MCP_SERVER_URL = "https://your-mcp-service.up.railway.app/sse"

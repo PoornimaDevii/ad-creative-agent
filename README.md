@@ -2,53 +2,32 @@
 
 ## Workflow Structure
 
-```
-User (Streamlit UI)
-    │
-    ▼
-app.py  ──────────────────────────────────────────────────────────
-│  • Validates GEMINI_API_KEY at startup                          │
-│  • Detects follow-up preview triggers ("show", "yes", "continue", "sure", etc.) │
-│  • Injects last known format_id into message for context                         │
-│  • Fallback: replaces hallucinated format_id with last known good one            │
-│  • Renders chat, format cards, and previews inside chat message area             │
-    │
-    ▼
-react_agent.py (LangGraph ReAct)
-│  • Gemini 2.5 Flash Lite — temperature 0.2, thinking_budget 512
-│  • Reasoning loop: Thought → Action → Observation → Repeat    │
-│  • 60s timeout on agent.ainvoke                                │
-│  • Keeps last 3 conversation turns (6 messages) as context    │
-    │
-    ├── list_creative_formats(@tool) ──────────────────────────────
-    │       Searches 48 Adzymic formats by name, dimensions, etc.  │
-    │       type filter only for explicit: video/display/audio/dooh │
-    │                                                              │
-    └── preview_creative(@tool) ───────────────────────────────────
-            Returns real Adzymic preview URLs for a format         │
-            Fetched server-side to bypass X-Frame-Options headers  │
-    │
-    ▼
-tool_handler (app.py)  ←── bridges agent tools to MCP client
-    │
-    ▼
-mcp_client.py  ←── SSE client with retry (3 attempts, async backoff)
-    │
-    ▼
-mcp_server.py (FastMCP, localhost:8000/sse)
-    │  • list_creative_formats — filters, fuzzy name search with stemming
-    │  • preview_creative — single / batch / variant modes
-    │
-    ▼
-registry/creative_formats.json  ←── 48 Adzymic ad formats (AdCP schema)
-```
+A user message flows through four layers before a response is rendered.
+
+**1. Streamlit UI — `app.py`**
+The entry point. Validates the API key at startup, detects follow-up preview triggers ("show", "yes", "continue", "sure", etc.), and injects the last known `format_id` into the message for context. If the agent returns a hallucinated format_id, it's silently replaced with the last known good one from session state. Renders the chat, format cards, and previews.
+
+**2. ReAct Agent — `llm/react_agent.py`**
+Powered by Gemini 2.5 Flash Lite (temperature 0.2, thinking_budget 512) via LangGraph's prebuilt ReAct agent. Runs a Thought → Action → Observation loop with a 60s timeout. Keeps the last 2 conversation turns (4 messages) as context. Exposes two tools to the LLM:
+
+- `list_creative_formats` — searches 48 Adzymic formats by name, type, dimensions, and asset requirements
+- `preview_creative` — fetches a real Adzymic preview URL for a given format
+
+**3. MCP Client — `mcp_client_module/mcp_client.py`**
+Bridges the agent tools to the MCP server over SSE transport. Each call retries up to 3 times with async exponential backoff. Returns structured error dicts on failure rather than raising exceptions.
+
+**4. MCP Server — `mcp_server.py`**
+A FastMCP server running on `localhost:8000/sse` (port configurable via `PORT` env var). Implements the full AdCP spec: fuzzy name search with suffix stemming, dimension filters, DCO filters, and preview generation in single / batch / variant modes. Reads format data from `registry/creative_formats.json`.
+
+**Registry — `registry/`**
+The source of truth for all format data. `creative_formats.json` holds the full AdCP v3 schema for all 48 formats, scraped from the [Adzymic format specifications](https://adzymic.freshdesk.com/support/solutions/articles/48000697384-ads-format-and-specifications-section) and parsed into structured JSON. `metadata.json` records the source URL, scrape/parse dates, schema version, and agent URL. `adzymic_raw.html` is the original scraped HTML kept for reference. To update the format catalog, re-run `parse_adzymic_to_json.py` against a fresh copy of the source HTML.
 
 ---
 
 ## Design Rationale
 
 ### Context Handling
-The agent receives only the last 3 conversation turns to keep the prompt lean and avoid token bloat. However, pure text history loses tool result data (format_ids, specs) between turns. To solve this, `app.py` maintains `st.session_state["last_format_id"]` — whenever `list_creative_formats` returns results, the first format's ID is stored. On follow-up preview requests ("show me", "yes", "continue", "sure", etc.), the format_id is injected directly into the enriched user message sent to the agent, bypassing the need for the agent to re-fetch. Additionally, if the agent hallucinates a format_id (wrong `agent_url` or ID not prefixed with `adzymic-`), `tool_handler` silently replaces it with the last known good one from session state. The stale format_id is cleared when the user asks about a completely new topic.
+The agent receives only the last 2 conversation turns (4 messages) to keep the prompt lean and avoid token bloat. However, pure text history loses tool result data (format_ids, specs) between turns. To solve this, `app.py` maintains `st.session_state["last_format_id"]` — whenever `list_creative_formats` returns results, the first format's ID is stored. On follow-up preview requests ("show me", "yes", "continue", "sure", etc.), the format_id is injected directly into the enriched user message sent to the agent, bypassing the need for the agent to re-fetch. Additionally, if the agent hallucinates a format_id (wrong `agent_url` or ID not prefixed with `adzymic-`), `tool_handler` silently replaces it with the last known good one from session state. The stale format_id is cleared when the user asks about a completely new topic.
 
 ### Type Filter vs Name Search
 The `type` field in the AdCP spec accepts only `audio`, `video`, `display`, `dooh`. Brand and platform names like "facebook", "instagram", "youtube", "tiktok" are not types — they are format name keywords. The agent is instructed (via both the tool docstring and system prompt) to always route these through `name_search` and never infer a `type` from them. This prevents the agent from returning "no DOOH formats available" when the user asks for "facebook ads".
@@ -63,6 +42,7 @@ Format names like "Feature Scrolled Ad" won't match a query like "feature scroll
 - **MCP client**: 3 retries with async exponential backoff (`asyncio.sleep`) — non-blocking, won't freeze the event loop
 - **Agent timeout**: `asyncio.wait_for(60s)` prevents hung LLM calls from blocking the UI indefinitely
 - **Missing preview URLs**: When `preview_creative` returns no URLs (format has no preview in registry, or agent sent a hallucinated format_id that was not caught by the fallback), the UI shows "No preview available" instead of silently rendering nothing
-- **Preview rendering**: HTML is fetched server-side via `requests` to bypass `X-Frame-Options`/CSP headers, then injected via `st.components.v1.html` inside the chat message context
-- **Missing API key**: Validated at startup with a clear error message before any rendering occurs
+- **Preview rendering**: HTML is fetched server-side via `requests` to bypass `X-Frame-Options`/CSP headers, then injected via `st.components.v1.html` inside the chat message context. Load failures show a user-friendly message without exposing raw errors.
+- **Missing API key**: Validated at startup with a generic error message before any rendering occurs
+- **Server unreachable**: Shown as a user-friendly message without exposing internal URLs or server details
 - **Tool name resolution**: LangGraph `ToolMessage.name` can be empty — the agent falls back to matching `tool_call_id` against `AIMessage.tool_calls` to correctly identify `preview_creative` results
