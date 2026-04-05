@@ -315,8 +315,11 @@ def _build_single_preview(
             elif isinstance(render_spec, dict):
                 d = render_spec.get("dimensions")
                 dims = Dimensions(**d) if d else None
-            # Use real Adzymic preview URL if available, else generate mock
-            real_url = real_urls[r_idx] if r_idx < len(real_urls) else None
+            # Use real URL if available for this render index, else reuse first URL
+            if real_urls:
+                real_url = real_urls[r_idx] if r_idx < len(real_urls) else real_urls[0]
+            else:
+                real_url = None
             render_id = f"render_{idx + 1}_{r_idx + 1}"
             renders.append(PreviewRender(
                 render_id=render_id,
@@ -396,6 +399,7 @@ async def list_creative_formats(
     min_height: Optional[int] = None,
     is_responsive: Optional[bool] = None,
     name_search: Optional[str] = None,
+    dco_available: Optional[bool] = None,
     wcag_level: Optional[str] = None,      # enum: A, AA, AAA
     disclosure_positions: Optional[List[str]] = None,
     disclosure_persistence: Optional[List[str]] = None,
@@ -451,17 +455,37 @@ async def list_creative_formats(
         formats = _filter_by_dimensions(formats, max_width, max_height, min_width, min_height)
     if is_responsive is not None:
         formats = [f for f in formats if f.is_responsive == is_responsive]
+    if dco_available is not None:
+        formats = [f for f in formats if f.dco_available == dco_available]
     if name_search:
         import html
-        needle = name_search.lower()
-        # Normalize both the search term and format names for better matching
+        needle = name_search.lower().strip()
+        # Normalize & variations
         needle_normalized = needle.replace(" and ", " & ").replace("and", "&")
-        formats = [
-            f for f in formats 
-            if needle in html.unescape(f.name).lower() 
-            or needle_normalized in html.unescape(f.name).lower()
-            or needle.replace("&", "and") in html.unescape(f.name).lower().replace("&", "and")
-        ]
+        needle_and = needle.replace("&", "and")
+        # Stem the needle — strip common suffixes for fuzzy matching
+        stem = needle
+        for suffix in ("ler", "led", "ing", "er", "ed", "s"):
+            if needle.endswith(suffix) and len(needle) - len(suffix) >= 3:
+                stem = needle[: -len(suffix)]
+                break
+
+        def name_matches(f: CreativeFormat) -> bool:
+            name = html.unescape(f.name).lower()
+            name_and = name.replace("&", "and")
+            # Direct match
+            if needle in name or needle_normalized in name or needle_and in name_and:
+                return True
+            # Stem match (single keyword only)
+            if stem != needle and len(needle.split()) == 1 and stem in name:
+                return True
+            # Multi-word: ALL words must appear (only when >1 word in query)
+            words = [w for w in needle.split() if len(w) >= 3]
+            if len(words) > 1 and all(w in name for w in words):
+                return True
+            return False
+
+        formats = [f for f in formats if name_matches(f)]
     if wcag_level:
         formats = _filter_by_wcag(formats, wcag_level)
     if disclosure_positions:
@@ -692,6 +716,6 @@ if __name__ == "__main__":
     print(f"Starting AdCP Creative Agent MCP Server — {len(FORMATS)} formats loaded")
     print(f"Transport: {transport}, Port: {port}")
     if transport == "sse":
-        mcp.run(transport="sse")
+        mcp.run(transport="sse", port=port)
     else:
         mcp.run(transport="stdio")

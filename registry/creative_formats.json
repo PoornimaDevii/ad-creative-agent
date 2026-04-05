@@ -491,7 +491,7 @@
           }
         }
       ],
-      "preview_urls": [],
+      "preview_urls": ["http://app.enzymic.co/previews/Aw1b39NPvYyrqBKz"],
       "specs": {
         "text_limit_variants": [
           {
@@ -649,7 +649,7 @@
           }
         }
       ],
-      "preview_urls": [],
+      "preview_urls": ["http://app.enzymic.co/previews/ZVOLxnWaKXpNg5rm"],
       "specs": {
         "text_limit_variants": [
           {
@@ -750,7 +750,7 @@
           }
         }
       ],
-      "preview_urls": [],
+      "preview_urls": ["https://app.enzymic.co/previews/RaW537nLMQylAw2x"],
       "specs": {
         "text_limit_variants": [
           {
@@ -864,7 +864,7 @@
           }
         }
       ],
-      "preview_urls": [],
+      "preview_urls": ["http://app.enzymic.co/previews/e0kEdyYPoknWJD73"],
       "specs": {
         "text_limit_variants": [
           {
@@ -991,7 +991,7 @@
           }
         }
       ],
-      "preview_urls": [],
+      "preview_urls": ["http://app.enzymic.co/previews/lXvqma96gwnKLJWk"],
       "specs": {
         "text_limit_variants": [
           {
@@ -1819,7 +1819,7 @@
           }
         }
       ],
-      "preview_urls": [],
+      "preview_urls": ["https://demo.enzymic.co/previews/8rRGxyv6K5y7Pjbe"],
       "specs": {
         "text_limit_variants": [],
         "min_cards_by_size": {},
