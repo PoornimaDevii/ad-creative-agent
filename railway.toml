@@ -2,9 +2,9 @@
 builder = "nixpacks"
 
 [deploy]
-startCommand = "python mcp_server.py sse"
+startCommand = "python http_server.py"
 restartPolicyType = "on_failure"
 restartPolicyMaxRetries = 3
 
 [environments.production.variables]
-PORT = "8000"
+PORT = "8080"
