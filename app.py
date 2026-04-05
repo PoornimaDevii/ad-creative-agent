@@ -29,6 +29,7 @@ load_dotenv()
 
 logger = logging.getLogger("app")
 MCP_SERVER_URL = os.getenv("MCP_SERVER_URL", "http://localhost:8080/mcp")
+print("MCP_SERVER_URL --------" , MCP_SERVER_URL)
 PREVIEW_TRIGGERS = {"preview", "show", "see", "yes", "show me", "show a preview", "preview it", "yes continue", "continue", "go ahead", "sure", "ok", "okay", "do it"}
 
 
