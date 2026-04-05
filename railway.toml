@@ -2,6 +2,6 @@
 builder = "nixpacks"
 
 [deploy]
-startCommand = "uvicorn wrapper:app --host 0.0.0.0 --port $PORT"
+startCommand = "uvicorn wrapper:app --host 0.0.0.0 --port 8000"
 restartPolicyType = "on_failure"
 restartPolicyMaxRetries = 3
