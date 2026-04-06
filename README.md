@@ -8,7 +8,7 @@ A user message flows through four layers before a response is rendered.
 The entry point. Validates the API key at startup, detects follow-up preview triggers ("show", "yes", "continue", "sure", etc.), and injects the last known `format_id` into the message for context. If the agent returns a hallucinated format_id, it's silently replaced with the last known good one from session state. Renders the chat, format cards, and previews.
 
 **2. ReAct Agent — `llm/react_agent.py`**
-Powered by Gemini 2.5 Flash Lite (temperature 0.2, thinking_budget 512) via LangGraph's prebuilt ReAct agent. Runs a Thought → Action → Observation loop with a 60s timeout. Keeps the last 2 conversation turns (4 messages) as context. Exposes two tools to the LLM:
+Powered by Gemini 2.5 Flash Lite (temperature 0, thinking_budget 512) via LangGraph's prebuilt ReAct agent. Runs a Thought → Action → Observation loop with a 60s timeout. Keeps the last 2 conversation turns (4 messages) as context. Exposes two tools to the LLM:
 
 - `list_creative_formats` — searches 48 Adzymic formats by name, type, dimensions, and asset requirements
 - `preview_creative` — fetches a real Adzymic preview URL for a given format
@@ -17,7 +17,7 @@ Powered by Gemini 2.5 Flash Lite (temperature 0.2, thinking_budget 512) via Lang
 Bridges the agent tools to the MCP server over SSE transport. Each call retries up to 3 times with async exponential backoff. Returns structured error dicts on failure rather than raising exceptions.
 
 **4. MCP Server — `mcp_server.py`**
-A FastMCP server running on `localhost:8000/sse` (port configurable via `PORT` env var). Implements the full AdCP spec: fuzzy name search with suffix stemming, dimension filters, DCO filters, and preview generation in single / batch / variant modes. Reads format data from `registry/creative_formats.json`.
+A FastMCP server running on `localhost:8000/sse` (port configurable via `PORT` env var, defaults to `8000`). The MCP client connects via `MCP_SERVER_URL` env var (defaults to `http://localhost:8000/sse`). Implements the full AdCP spec: fuzzy name search with suffix stemming, dimension filters, DCO filters, and preview generation in single / batch / variant modes. Reads format data from `registry/creative_formats.json`.
 
 **Registry — `registry/`**
 The source of truth for all format data. `creative_formats.json` holds the full AdCP v3 schema for all 48 formats, scraped from the [Adzymic format specifications](https://adzymic.freshdesk.com/support/solutions/articles/48000697384-ads-format-and-specifications-section) and parsed into structured JSON. `metadata.json` records the source URL, scrape/parse dates, schema version, and agent URL. `adzymic_raw.html` is the original scraped HTML kept for reference. To update the format catalog, re-run `parse_adzymic_to_json.py` against a fresh copy of the source HTML.
@@ -46,3 +46,51 @@ Format names like "Feature Scrolled Ad" won't match a query like "feature scroll
 - **Missing API key**: Validated at startup with a generic error message before any rendering occurs
 - **Server unreachable**: Shown as a user-friendly message without exposing internal URLs or server details
 - **Tool name resolution**: LangGraph `ToolMessage.name` can be empty — the agent falls back to matching `tool_call_id` against `AIMessage.tool_calls` to correctly identify `preview_creative` results
+
+---
+
+## Deployment
+
+The app is deployed on [Railway](https://railway.app) as a single service running both the MCP server and Streamlit UI via `start.sh`.
+
+### How it works
+
+`start.sh` starts the MCP server in the background, waits 5 seconds for it to be ready, then launches the Streamlit app on the Railway-assigned `$PORT`:
+
+```bash
+#!/bin/bash
+python mcp_server.py sse &
+sleep 5
+streamlit run app.py --server.port=$PORT --server.address=0.0.0.0 --server.headless=true
+```
+
+### Railway config (`railway.streamlit.toml`)
+
+```toml
+[build]
+builder = "nixpacks"
+
+[deploy]
+startCommand = "bash start.sh"
+restartPolicyType = "on_failure"
+restartPolicyMaxRetries = 3
+```
+
+### Environment variables
+
+Set these in the Railway dashboard under your service's Variables tab:
+
+| Variable | Description |
+|---|---|
+| `GEMINI_API_KEY` | Your Gemini API key |
+| `MCP_SERVER_URL` | Set to `http://localhost:8000/sse` since both processes run in the same container |
+
+> `PORT` is automatically injected by Railway — do not set it manually.
+
+### Steps to deploy
+
+1. Push the repo to GitHub
+2. Create a new Railway project and connect the repo
+3. Railway auto-detects `railway.streamlit.toml` and uses `bash start.sh` as the start command
+4. Add `GEMINI_API_KEY` and `MCP_SERVER_URL` in the Variables tab
+5. Deploy — Railway builds with Nixpacks and installs `requirements.txt` automatically
