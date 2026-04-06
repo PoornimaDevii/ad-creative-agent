@@ -19,6 +19,10 @@ Bridges the agent tools to the MCP server over Streamable HTTP aka SSE transport
 **4. MCP Server — `mcp_server.py`**
 A FastMCP server running on `localhost:8000/sse` (port configurable via `PORT` env var, defaults to `8000`). The MCP client connects via `MCP_SERVER_URL` env var (defaults to `http://localhost:8000/sse`). Implements the full AdCP spec: fuzzy name search with suffix stemming, dimension filters, DCO filters, and preview generation in single / batch / variant modes. Reads format data from `registry/creative_formats.json`.
 
+To know more about the setup of the MCP server and relevant tools, refer [MCP Readme](README_MCP.md).
+
+MCP server interacts with a registry or storage where ground truth about the ads are stored, as described below : 
+
 **Registry — `registry/`**
 The source of ground truth for all format data. `creative_formats.json` holds the full AdCP v3 schema for all 48 formats, scraped from the [Adzymic format specifications](https://adzymic.freshdesk.com/support/solutions/articles/48000697384-ads-format-and-specifications-section) and parsed into structured JSON. `metadata.json` records the source URL, scrape/parse dates, schema version, and agent URL. `adzymic_raw.html` is the original scraped HTML kept for reference. To update the format catalog, re-run `parse_adzymic_to_json.py` against a fresh copy of the source HTML.
 
