@@ -330,7 +330,7 @@ def render_server_status(connected: bool, url: str):
     st.sidebar.markdown('<div class="sidebar-section">Capabilities</div>', unsafe_allow_html=True)
 
     # Static capability list — informational only
-    for cap in ["Browse creative formats", "Preview ad creatives", "Filter by type & size", "DCO format discovery"]:
+    for cap in ["Browse creative formats", "Preview ad creatives", "DCO format discovery"]:
         st.sidebar.markdown(
             f'<p style="font-size:0.82rem;color:#888;margin:0.2rem 0;">{cap}</p>',
             unsafe_allow_html=True,
