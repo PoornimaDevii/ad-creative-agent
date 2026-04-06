@@ -1,6 +1,6 @@
-# AdCP Creative Agent MCP Server
+# AdCP-based Creative Agent MCP Server
 
-An MCP (Model Context Protocol) server that provides access to 48 Adzymic creative ad formats through the Ad Context Protocol (AdCP) specification.
+This is an MCP (Model Context Protocol) server that provides access to 48 Adzymic creative ad formats through the Ad Context Protocol (AdCP) specification.
 
 ## Features
 
@@ -23,26 +23,11 @@ pip install -r requirements.txt
 python mcp_server.py stdio
 ```
 
-### As HTTP Server (SSE)
+### As Streamable HTTP Server (SSE)
 ```bash
 python mcp_server.py sse
 # Server runs on http://localhost:8000/sse by default
 # Override port via PORT env var: PORT=9000 python mcp_server.py sse
-```
-
-### With Claude Desktop
-
-Add to your Claude Desktop config (`~/Library/Application Support/Claude/claude_desktop_config.json` on macOS):
-
-```json
-{
-  "mcpServers": {
-    "adcp-creative": {
-      "command": "python",
-      "args": ["/path/to/mcp_server.py", "stdio"]
-    }
-  }
-}
 ```
 
 ### With Other MCP Clients
@@ -150,5 +135,7 @@ Full AdCP specification: https://adcontextprotocol.org
 Built with:
 - [MCP](https://modelcontextprotocol.io) — Model Context Protocol
 - [FastMCP](https://github.com/jlowin/fastmcp) — Fast MCP server framework
-- [Adzymic](https://adzymic.com) — Creative format provider
+- [Adzymic Formats](https://adzymic.freshdesk.com/support/solutions/articles/48000697384-ads-format-and-specifications-section) — Creative format provider
 - [AdCP](https://adcontextprotocol.org) — Ad Context Protocol specification
+    - [AdCP list_creative_formats](https://docs.adcontextprotocol.org/docs/creative/task-reference/list_creative_formats)
+    - [AdCP preview_creative](https://docs.adcontextprotocol.org/docs/creative/task-reference/preview_creative)
